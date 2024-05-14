@@ -19,6 +19,10 @@
                         <v-col cols="12">
                             <v-text-field v-model="localEditedItem.department" label="Department"></v-text-field>
                         </v-col>
+                        <v-col cols="12">
+                            <v-file-input v-model="localEditedItem.image" label="Employee Image"
+                                prepend-icon="mdi-camera" accept="image/*"></v-file-input>
+                        </v-col>
                     </v-row>
                 </v-container>
             </v-card-text>
@@ -37,7 +41,7 @@ const props = defineProps({
     dialog: Boolean,
     editedItem: {
         type: Object,
-        default: () => ({ firstName: "", lastName: "", position: "", department: "" })
+        default: () => ({ firstName: "", lastName: "", position: "", department: "", image: null })
     }
 });
 
@@ -61,11 +65,21 @@ const dialogTitle = computed(() => {
 const emitSave = () => {
     emit('save', { ...localEditedItem.value });
     emit('close');
-    console.log("save clicked",localEditedItem.value  )
 };
 
 const emitClose = () => {
     emit('update:dialog', false);
     emit('close');
 };
+
+watch(() => localEditedItem.value.image, (newVal) => {
+    if (newVal && newVal instanceof File) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            localEditedItem.value.imageUrl = e.target.result;
+        };
+        reader.readAsDataURL(newVal);
+    }
+}, { immediate: true });
+
 </script>
