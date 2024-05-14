@@ -72,8 +72,6 @@ export default defineComponent({
 
 .tab-content {
     padding: 20px;
-    border: 1px solid #ccc;
-    border-top: none;
     transition: all 0.3s ease;
     background-color: #fff;
 }

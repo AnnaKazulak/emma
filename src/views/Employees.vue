@@ -3,24 +3,22 @@
     <h1>Hallo Employee Page</h1>
     <EmployeeToolbar @update:search="search = $event" :addNewItem="addNewItem" />
 
-    <!-- Tabs Component -->
     <Tabs :tabs="tabs" initial-tab="EmployeeList">
-      <!-- Tab 1: Employee List -->
+
       <Tab name="EmployeeList">
-        <EmployeeList
-          :employees="filteredEmployees"
-          :selected="selected"
-          :headers="headers"
-          @editItem="editItem"
-          @deleteItem="openDeleteDialog"
-        />
+        <EmployeeList :employees="filteredEmployees" :selected="selected" :headers="headers" @editItem="editItem"
+          @deleteItem="openDeleteDialog" />
         <EmployeeDialog :dialog="dialog" :editedItem="editedItem" @save="handleSave" @close="close" />
-        <DeleteEmployeeDialog :dialog="dialogDelete" :employee="selectedEmployee" @update:dialog="updateDeleteDialog" @delete="deleteEmployee" />
+        <DeleteEmployeeDialog :dialog="dialogDelete" :employee="selectedEmployee" @update:dialog="updateDeleteDialog"
+          @delete="deleteEmployee" />
       </Tab>
 
-      <!-- Tab 2: Just a placeholder text -->
-      <Tab name="two">
-        <div>This is the second tab.</div>
+      <Tab name="EmployeeCard">
+        <v-row>
+          <v-col cols="12" md="6" lg="4" v-for="employee in filteredEmployees" :key="employee.firstName">
+            <EmployeeCard :employee="employee" @edit="editItem" @delete="openDeleteDialog" />
+          </v-col>
+        </v-row>
       </Tab>
 
       <!-- Tab 3: Just a placeholder text -->
@@ -41,42 +39,45 @@ import EmployeeToolbar from "@/components/EmployeeToolbar.vue";
 import EmployeeList from "@/components/EmployeeList.vue";
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
+import EmployeeCard from "@/components/EmployeeCard.vue";
+
 
 interface Employee {
   firstName: string;
   lastName: string;
   position: string;
   department: string;
+  image: string;
 }
 
 const employees = ref<Employee[]>([
-    { firstName: "Evelyn", lastName: "Fredowska", position: "Software Developer", department: "IT" },
-    { firstName: "John", lastName: "Doe", position: "Project Manager", department: "Management" },
-    { firstName: "Alice", lastName: "Smith", position: "UI/UX Designer", department: "Design" },
-    { firstName: "Michael", lastName: "Johnson", position: "Database Administrator", department: "IT" },
-    { firstName: "Emily", lastName: "Brown", position: "Software Engineer", department: "IT" },
-    { firstName: "David", lastName: "Jones", position: "Quality Assurance Engineer", department: "QA" },
-    { firstName: "Sophia", lastName: "Garcia", position: "Data Analyst", department: "Analytics" },
-    { firstName: "Daniel", lastName: "Martinez", position: "Network Engineer", department: "IT" },
-    { firstName: "Olivia", lastName: "Wilson", position: "Systems Analyst", department: "IT" },
-    { firstName: "James", lastName: "Taylor", position: "Frontend Developer", department: "IT" },
-    { firstName: "Emma", lastName: "Anderson", position: "Backend Developer", department: "IT" },
-    { firstName: "William", lastName: "Thomas", position: "Business Analyst", department: "Business" },
-    { firstName: "Ava", lastName: "Hernandez", position: "Product Manager", department: "Management" },
-    { firstName: "Alexander", lastName: "Lopez", position: "DevOps Engineer", department: "IT" },
-    { firstName: "Mia", lastName: "Hill", position: "Technical Writer", department: "Documentation" },
-    { firstName: "Benjamin", lastName: "Scott", position: "Security Analyst", department: "IT" },
-    { firstName: "Charlotte", lastName: "Green", position: "Scrum Master", department: "Agile" },
-    { firstName: "Ethan", lastName: "Adams", position: "Machine Learning Engineer", department: "AI" },
-    { firstName: "Isabella", lastName: "Baker", position: "Software Tester", department: "QA" },
-    { firstName: "Liam", lastName: "Gonzalez", position: "Systems Administrator", department: "IT" }
+  { firstName: "Evelyn", lastName: "Fredowska", position: "Software Developer", department: "IT", image: "https://picsum.photos/id/237/200/300" },
+  { firstName: "John", lastName: "Doe", position: "Project Manager", department: "Management", image: "https://picsum.photos/id/1/200/300"  },
+  { firstName: "Alice", lastName: "Smith", position: "UI/UX Designer", department: "Design", image: "https://picsum.photos/id/22/200/300"  },
+  { firstName: "Michael", lastName: "Johnson", position: "Database Administrator", department: "IT", image: "https://picsum.photos/id/40/200/300"  },
+  { firstName: "Emily", lastName: "Brown", position: "Software Engineer", department: "IT", image: "https://picsum.photos/id/64/200/300"  },
+  { firstName: "David", lastName: "Jones", position: "Quality Assurance Engineer", department: "QA", image: "https://picsum.photos/id/65/200/300"  },
+  { firstName: "Sophia", lastName: "Garcia", position: "Data Analyst", department: "Analytics" , image: "https://picsum.photos/id/169/200/300" },
+  { firstName: "Daniel", lastName: "Martinez", position: "Network Engineer", department: "IT", image: "https://picsum.photos/id/177/200/300"  },
+  { firstName: "Olivia", lastName: "Wilson", position: "Systems Analyst", department: "IT", image: "https://picsum.photos/id/200/200/300"  },
+  { firstName: "James", lastName: "Taylor", position: "Frontend Developer", department: "IT", image: "https://picsum.photos/id/219/200/300"  },
+  { firstName: "Emma", lastName: "Anderson", position: "Backend Developer", department: "IT" , image: "https://picsum.photos/id/225/200/300" },
+  { firstName: "William", lastName: "Thomas", position: "Business Analyst", department: "Business", image: "https://picsum.photos/id/342/200/300"  },
+  { firstName: "Ava", lastName: "Hernandez", position: "Product Manager", department: "Management" , image: "https://picsum.photos/id/375/200/300" },
+  { firstName: "Alexander", lastName: "Lopez", position: "DevOps Engineer", department: "IT", image: "https://picsum.photos/id/399/200/300"  },
+  { firstName: "Mia", lastName: "Hill", position: "Technical Writer", department: "Documentation", image: "https://picsum.photos/id/453/200/300"  },
+  { firstName: "Benjamin", lastName: "Scott", position: "Security Analyst", department: "IT" , image: "https://picsum.photos/id/550/200/300" },
+  { firstName: "Charlotte", lastName: "Green", position: "Scrum Master", department: "Agile" , image: "https://picsum.photos/id/582/200/300" },
+  { firstName: "Ethan", lastName: "Adams", position: "Machine Learning Engineer", department: "AI" , image: "https://picsum.photos/id/593/200/300" },
+  { firstName: "Isabella", lastName: "Baker", position: "Software Tester", department: "QA" , image: "https://picsum.photos/id/633/200/300" },
+  { firstName: "Liam", lastName: "Gonzalez", position: "Systems Administrator", department: "IT" , image: "https://picsum.photos/id/646/200/300" }
 ]);
 
 const search = ref('');
 
 const tabs = ref([
   { name: 'EmployeeList', label: 'Employee List', icon: 'mdi-account-group' },
-  { name: 'two', label: 'Item Two', icon: 'mdi-card-account-details-outline' },
+  { name: 'EmployeeCard', label: 'Employee Card', icon: 'mdi-card-account-details-outline' },
   { name: 'three', label: 'Item Three', icon: 'mdi-camera-image' }
 ]);
 
