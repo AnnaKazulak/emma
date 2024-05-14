@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
-import { VToolbarTitle } from "vuetify/lib/components/index.mjs";
 import EmployeeDialog from "./EmployeeDialog.vue";
 import DeleteEmployeeDialog from "./DeleteEmployeeDialog.vue";
+import EmployeeToolbar from './EmployeeToolbar.vue';
 
 interface Employee {
     firstName: string;
@@ -123,20 +123,15 @@ const headers = [
     { title: "Actions", value: "actions", sortable: false }
 ];
 
+
+
+
 </script>
 
 <template>
-    <v-data-table v-model="selected" :headers="headers" :items="filteredEmployees" item-key="lastName">
-        <template v-slot:top>
-            <v-toolbar>
-                <v-toolbar-title>Employee Management</v-toolbar-title>
-                <v-divider class="mx-4" inset vertical></v-divider>
-                <v-text-field v-model="search" label="Search" single-line hide-details></v-text-field>
-                <v-spacer></v-spacer>
-                <v-btn class="mb-2" color="primary" dark @click="addNewItem">Add Employee</v-btn>
-            </v-toolbar>
-        </template>
+    <EmployeeToolbar @update:search="search = $event" :addNewItem="addNewItem" />
 
+    <v-data-table v-model="selected" :headers="headers" :items="filteredEmployees" item-key="lastName">
         <template v-slot:item.actions="{ item }">
             <v-icon class="me-2" size="small" @click="editItem(item)">
                 mdi-pencil
