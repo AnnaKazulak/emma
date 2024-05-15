@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from "vue";
+import { Employee } from "@/types/Employee";
 import { VDataTable } from "vuetify/labs/VDataTable";
 
 const props = defineProps<{
@@ -10,12 +11,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['editItem', 'deleteItem']);
 
-interface Employee {
-  firstName: string;
-  lastName: string;
-  position: string;
-  department: string;
-}
 
 const handleEdit = (item: Employee) => {
   emit('editItem', item);
