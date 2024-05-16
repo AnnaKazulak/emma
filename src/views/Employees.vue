@@ -7,15 +7,11 @@
     <Tabs :tabs="tabs" initial-tab="EmployeeList">
       <!-- Tab 1: Employee List -->
       <Tab name="EmployeeList">
-        <EmployeeList
-          :employees="filteredEmployees"
-          :selected="selected"
-          :headers="headers"
-          @editItem="editItem"
-          @deleteItem="openDeleteDialog"
-        />
+        <EmployeeList :employees="filteredEmployees" :selected="selected" :headers="headers" @editItem="editItem"
+          @deleteItem="openDeleteDialog" />
         <EmployeeDialog :dialog="dialog" :editedItem="editedItem" @save="handleSave" @close="close" />
-        <DeleteEmployeeDialog :dialog="dialogDelete" :employee="selectedEmployee" @update:dialog="updateDeleteDialog" @delete="deleteEmployee" />
+        <DeleteEmployeeDialog :dialog="dialogDelete" :employee="selectedEmployee" @update:dialog="updateDeleteDialog"
+          @delete="deleteEmployee" />
       </Tab>
 
       <!-- Tab 2: Just a placeholder text -->
@@ -35,6 +31,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { Employee } from "@/types/types";
+import { employees as employeeData } from "@/data/employees";
 import EmployeeDialog from "@/components/EmployeeDialog.vue";
 import DeleteEmployeeDialog from "@/components/DeleteEmployeeDialog.vue";
 import EmployeeToolbar from "@/components/EmployeeToolbar.vue";
@@ -42,35 +40,9 @@ import EmployeeList from "@/components/EmployeeList.vue";
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
 
-interface Employee {
-  firstName: string;
-  lastName: string;
-  position: string;
-  department: string;
-}
 
-const employees = ref<Employee[]>([
-    { firstName: "Evelyn", lastName: "Fredowska", position: "Software Developer", department: "IT" },
-    { firstName: "John", lastName: "Doe", position: "Project Manager", department: "Management" },
-    { firstName: "Alice", lastName: "Smith", position: "UI/UX Designer", department: "Design" },
-    { firstName: "Michael", lastName: "Johnson", position: "Database Administrator", department: "IT" },
-    { firstName: "Emily", lastName: "Brown", position: "Software Engineer", department: "IT" },
-    { firstName: "David", lastName: "Jones", position: "Quality Assurance Engineer", department: "QA" },
-    { firstName: "Sophia", lastName: "Garcia", position: "Data Analyst", department: "Analytics" },
-    { firstName: "Daniel", lastName: "Martinez", position: "Network Engineer", department: "IT" },
-    { firstName: "Olivia", lastName: "Wilson", position: "Systems Analyst", department: "IT" },
-    { firstName: "James", lastName: "Taylor", position: "Frontend Developer", department: "IT" },
-    { firstName: "Emma", lastName: "Anderson", position: "Backend Developer", department: "IT" },
-    { firstName: "William", lastName: "Thomas", position: "Business Analyst", department: "Business" },
-    { firstName: "Ava", lastName: "Hernandez", position: "Product Manager", department: "Management" },
-    { firstName: "Alexander", lastName: "Lopez", position: "DevOps Engineer", department: "IT" },
-    { firstName: "Mia", lastName: "Hill", position: "Technical Writer", department: "Documentation" },
-    { firstName: "Benjamin", lastName: "Scott", position: "Security Analyst", department: "IT" },
-    { firstName: "Charlotte", lastName: "Green", position: "Scrum Master", department: "Agile" },
-    { firstName: "Ethan", lastName: "Adams", position: "Machine Learning Engineer", department: "AI" },
-    { firstName: "Isabella", lastName: "Baker", position: "Software Tester", department: "QA" },
-    { firstName: "Liam", lastName: "Gonzalez", position: "Systems Administrator", department: "IT" }
-]);
+
+const employees = ref<Employee[]>(employeeData)
 
 const search = ref('');
 
@@ -82,7 +54,7 @@ const tabs = ref([
 
 const activeTab = ref(tabs.value[0].name);
 
-function selectTab(tabName) {
+function selectTab(tabName: string) {
   activeTab.value = tabName;
 }
 
