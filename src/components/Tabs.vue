@@ -61,8 +61,8 @@ export default defineComponent({
 
 .tabs button.active,
 .tabs button:hover {
-    color: #4285f4;
-    border-bottom: 3px solid #4285f4;
+    color: #f79202;
+    border-bottom: 3px solid #f79202;
 }
 
 .tabs .mdi {
