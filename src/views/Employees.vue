@@ -132,6 +132,7 @@ const addNewItem = () => {
 const headers = [
   { title: "First Name", value: "firstName" },
   { title: "Last Name", value: "lastName" },
+  { title: "Status", value: "status" },
   { title: "Position", value: "position" },
   { title: "Department", value: "department" },
   { title: "Actions", value: "actions", sortable: false }
