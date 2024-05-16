@@ -41,7 +41,6 @@ import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
 
 
-
 const employees = ref<Employee[]>(employeeData)
 
 const search = ref('');
@@ -74,7 +73,8 @@ const editedItem = ref<Employee>({
   firstName: "",
   lastName: "",
   position: "",
-  department: ""
+  department: "",
+  status: ""
 });
 
 const editItem = (item: Employee) => {
@@ -86,7 +86,7 @@ const editItem = (item: Employee) => {
 const close = () => {
   dialog.value = false;
   editedIndex.value = -1;
-  editedItem.value = { firstName: "", lastName: "", position: "", department: "" };
+  editedItem.value = { firstName: "", lastName: "", position: "", department: "", status: "" };
 };
 
 const handleSave = (newData: Employee) => {
@@ -124,7 +124,7 @@ const deleteEmployee = (employee: Employee) => {
 
 const addNewItem = () => {
   editedIndex.value = -1; // Indicates a new employee
-  editedItem.value = { firstName: "", lastName: "", position: "", department: "" };
+  editedItem.value = { firstName: "", lastName: "", position: "", department: "", status: "" };
   dialog.value = true;
   console.log("open add employ dialog");
 };
@@ -137,3 +137,51 @@ const headers = [
   { title: "Actions", value: "actions", sortable: false }
 ];
 </script>
+
+<style scoped>
+/* Ensure the container takes full width */
+.v-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Full width tabs and toolbar */
+.tabs, .employee-toolbar {
+  width: 100%;
+}
+
+/* List responsiveness */
+.employee-list {
+  width: 100%;
+  overflow-x: auto; /* Allows table to scroll on small screens */
+}
+
+/* Responsive Table */
+.table {
+  width: 100%;
+  min-width: 600px; /* Ensures table has a minimum width but can scroll on smaller screens */
+}
+
+/* Dialogs should be centered and responsive */
+.dialog {
+  width: 90%;
+  max-width: 600px;
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+  .dialog, .tabs, .employee-toolbar {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs, .employee-toolbar {
+    flex-direction: column;
+  }
+}
+</style>
