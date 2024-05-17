@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Employee } from "@/types/types";
-import { defineProps, defineEmits, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
-import { VSelect, VBtn } from "vuetify/components";
+import EmployeeFilters from "./EmployeeFilters.vue";
+import { Employee } from "@/types/types";
 
-// Define props and emits
 const props = defineProps<{
   employees: Employee[];
   selected: Employee[];
@@ -13,7 +12,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['editItem', 'deleteItem']);
 
-// Event handlers for editing and deleting
+
 const handleEdit = (item: Employee) => {
   emit('editItem', item);
 };
@@ -22,42 +21,41 @@ const handleDelete = (item: Employee) => {
   emit('deleteItem', item);
 };
 
-const statusFilter = ref<string[]>([]);
-const positionFilter = ref('');
-const departmentFilter = ref<string[]>([]);
+const filters = ref({
+  status: [],
+  position: '',
+  department: []
+});
 
 const filteredEmployees = computed(() => {
   return props.employees.filter(employee => {
     return (
-      (statusFilter.value.length === 0 || statusFilter.value.includes(employee.status)) &&
-      employee.position.toLowerCase().includes(positionFilter.value.toLowerCase()) &&
-      (departmentFilter.value.length === 0 || departmentFilter.value.includes(employee.department))
+      (filters.value.status.length === 0 || filters.value.status.includes(employee.status)) &&
+      employee.position.toLowerCase().includes(filters.value.position.toLowerCase()) &&
+      (filters.value.department.length === 0 || filters.value.department.includes(employee.department))
     );
   });
 });
 
-// Function to reset all filters
+const updateFilters = (newFilters) => {
+  filters.value = newFilters;
+};
+
 const resetFilters = () => {
-  statusFilter.value = [];
-  positionFilter.value = '';
-  departmentFilter.value = [];
+  filters.value = { status: [], position: '', department: [] };
+  // Emit an event that the filters are reset, handled by child to reset form inputs
+  updateFilters(filters.value);
 };
 </script>
 
+
 <template>
-  <v-select label="Filter by Status" v-model="statusFilter"
-    :items="['Active', 'Part-Time', 'Remote', 'On Leave', 'On Probation', 'Suspended']" outlined dense multiple chips>
-  </v-select>
+  <!-- Employee Filters component usage -->
+  <EmployeeFilters :status-options="['Active', 'Part-Time', 'Remote', 'On Leave', 'On Probation', 'Suspended']"
+    :department-options="['HR', 'Engineering', 'Marketing', 'Sales', 'Customer Support', 'IT', 'Management', 'Analytics', 'Business', 'Documentation', 'Agile', 'AI', 'QA']"
+    :initial-filters="filters" @updateFilters="updateFilters" @resetFilters="resetFilters" />
 
-  <v-text-field label="Filter by Position" v-model="positionFilter" outlined dense></v-text-field>
-
-  <v-select label="Filter by Department" v-model="departmentFilter"
-    :items="['HR', 'Engineering', 'Marketing', 'Sales', 'Customer Support', 'IT', 'Management', 'Analytics', 'Business', 'Documentation', 'Agile', 'AI', 'QA']"
-    outlined dense multiple chips>
-  </v-select>
-
-  <v-btn color="primary" @click="resetFilters" class="ma-2" text>Reset Filters</v-btn>
-
+  <!-- Data Table Display -->
   <v-data-table v-model="props.selected" :headers="props.headers" :items="filteredEmployees" item-key="lastName">
     <template v-slot:item.actions="{ item }">
       <v-icon class="me-2" size="small" @click="handleEdit(item)">
