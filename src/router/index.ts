@@ -23,6 +23,12 @@ const routes = [
         component: () => import(/* webpackChunkName: "posts" */ '@/views/Employees.vue'),
       },
       {
+        path: '/employees/:id',  // Dynamic route for employee details
+        name: 'EmployeeDetails',
+        component: () => import('@/views/EmployeeDetails.vue'),
+        props: true  // Pass route.params to the component
+      },
+      {
         path: '/comments',
         name: 'Comments',
         // route level code-splitting

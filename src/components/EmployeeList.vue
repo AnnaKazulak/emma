@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
+import { useRouter } from 'vue-router';  // Import useRouter
 
 const props = defineProps<{
   employees: Employee[];
@@ -10,8 +11,9 @@ const props = defineProps<{
   headers: any[];
 }>();
 
-const emit = defineEmits(['editItem', 'deleteItem']);
+const router = useRouter();  // Initialize the router instance
 
+const emit = defineEmits(['editItem', 'deleteItem']);
 
 const handleEdit = (item: Employee) => {
   emit('editItem', item);
@@ -20,6 +22,20 @@ const handleEdit = (item: Employee) => {
 const handleDelete = (item: Employee) => {
   emit('deleteItem', item);
 };
+
+const handleRowClick = (event, data) => {
+  // Assuming the actual data is under the 'item' property as per your log
+  const actualItem = data.item;
+  console.log("Received actual item on row click:", actualItem);
+  if (actualItem && actualItem.id) {  // Check if actualItem and actualItem.id are defined
+    router.push({ name: 'EmployeeDetails', params: { id: actualItem.id } });
+  } else {
+    console.error('Error: Employee ID is missing or undefined', actualItem);
+  }
+};
+
+
+
 
 const filters = ref({
   status: [],
@@ -43,11 +59,15 @@ const updateFilters = (newFilters) => {
 
 const resetFilters = () => {
   filters.value = { status: [], position: '', department: [] };
-  // Emit an event that the filters are reset, handled by child to reset form inputs
   updateFilters(filters.value);
 };
-</script>
 
+watch(filteredEmployees, (newVal) => {
+  console.log("Filtered Employees Updated:", newVal);
+}, { deep: true });
+
+
+</script>
 
 <template>
   <!-- Employee Filters component usage -->
@@ -56,14 +76,17 @@ const resetFilters = () => {
     :initial-filters="filters" @updateFilters="updateFilters" @resetFilters="resetFilters" />
 
   <!-- Data Table Display -->
-  <v-data-table v-model="props.selected" :headers="props.headers" :items="filteredEmployees" item-key="lastName">
+  <v-data-table v-model="props.selected" :headers="props.headers" :items="filteredEmployees" item-key="id"
+    @click:row="handleRowClick"> <!-- Simplify this for now to check the first argument structure -->
     <template v-slot:item.actions="{ item }">
-      <v-icon class="me-2" size="small" @click="handleEdit(item)">
+      <v-icon class="me-2" size="small" @click.stop="handleEdit(item)">
         mdi-pencil
       </v-icon>
-      <v-icon size="small" @click="handleDelete(item)">
+      <v-icon size="small" @click.stop="handleDelete(item)">
         mdi-delete
       </v-icon>
     </template>
   </v-data-table>
+
+
 </template>

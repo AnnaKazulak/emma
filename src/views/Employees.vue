@@ -30,7 +30,7 @@
 
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref,inject } from "vue";
 import { Employee } from "@/types/types";
 import { employees as employeeData } from "@/data/employees";
 import EmployeeDialog from "@/components/EmployeeDialog.vue";
@@ -41,7 +41,8 @@ import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
 
 
-const employees = ref<Employee[]>(employeeData)
+// Inject the shared employees state
+const employees = inject('employeesKey');
 
 const search = ref('');
 
@@ -59,22 +60,36 @@ function selectTab(tabName: string) {
 
 const filteredEmployees = computed(() => {
   return employees.value.filter(employee => {
-    return Object.values(employee).some(value =>
-      value.toLowerCase().includes(search.value.toLowerCase())
-    );
+    return (employee.firstName.toLowerCase().includes(search.value.toLowerCase()) ||
+      employee.lastName.toLowerCase().includes(search.value.toLowerCase()) ||
+      employee.position.toLowerCase().includes(search.value.toLowerCase()) ||
+      employee.department.toLowerCase().includes(search.value.toLowerCase()) ||
+      employee.status.toLowerCase().includes(search.value.toLowerCase()) ||
+      `${employee.address.street} ${employee.address.houseNumber} ${employee.address.city} ${employee.address.zipCode}`.toLowerCase().includes(search.value.toLowerCase()));
   });
 });
+;
 
 const selected = ref<Employee[]>([]);
 const dialogDelete = ref(false);
 const dialog = ref(false);
 const editedIndex = ref(-1);
+
 const editedItem = ref<Employee>({
+  id: 0,
   firstName: "",
   lastName: "",
   position: "",
   department: "",
-  status: ""
+  status: "",
+  dateOfBirth: "",
+  startDate: "",
+  address: {
+    street: "",
+    houseNumber: "",
+    zipCode: "",
+    city: "",
+  },
 });
 
 const editItem = (item: Employee) => {
@@ -86,7 +101,17 @@ const editItem = (item: Employee) => {
 const close = () => {
   dialog.value = false;
   editedIndex.value = -1;
-  editedItem.value = { firstName: "", lastName: "", position: "", department: "", status: "" };
+  editedItem.value = {
+    id: 0,
+    firstName: "", lastName: "", position: "", department: "", status: "", dateOfBirth: "",
+    startDate: "",
+    address: {
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      city: "",
+    }
+  };
 };
 
 const handleSave = (newData: Employee) => {
@@ -124,7 +149,17 @@ const deleteEmployee = (employee: Employee) => {
 
 const addNewItem = () => {
   editedIndex.value = -1; // Indicates a new employee
-  editedItem.value = { firstName: "", lastName: "", position: "", department: "", status: "" };
+  editedItem.value = {
+    id: 0,
+    firstName: "", lastName: "", position: "", department: "", status: "", dateOfBirth: "",
+    startDate: "",
+    address: {
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      city: "",
+    }
+  };
   dialog.value = true;
   console.log("open add employ dialog");
 };
@@ -135,6 +170,7 @@ const headers = [
   { title: "Status", value: "status" },
   { title: "Position", value: "position" },
   { title: "Department", value: "department" },
+  { title: "Id", value: "id" },
   { title: "Actions", value: "actions", sortable: false }
 ];
 </script>
@@ -151,20 +187,23 @@ const headers = [
 }
 
 /* Full width tabs and toolbar */
-.tabs, .employee-toolbar {
+.tabs,
+.employee-toolbar {
   width: 100%;
 }
 
 /* List responsiveness */
 .employee-list {
   width: 100%;
-  overflow-x: auto; /* Allows table to scroll on small screens */
+  overflow-x: auto;
+  /* Allows table to scroll on small screens */
 }
 
 /* Responsive Table */
 .table {
   width: 100%;
-  min-width: 600px; /* Ensures table has a minimum width but can scroll on smaller screens */
+  min-width: 600px;
+  /* Ensures table has a minimum width but can scroll on smaller screens */
 }
 
 /* Dialogs should be centered and responsive */
@@ -175,13 +214,18 @@ const headers = [
 
 /* Media queries for different screen sizes */
 @media (max-width: 768px) {
-  .dialog, .tabs, .employee-toolbar {
+
+  .dialog,
+  .tabs,
+  .employee-toolbar {
     padding: 10px;
   }
 }
 
 @media (max-width: 480px) {
-  .tabs, .employee-toolbar {
+
+  .tabs,
+  .employee-toolbar {
     flex-direction: column;
   }
 }
