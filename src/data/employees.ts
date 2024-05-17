@@ -3,6 +3,7 @@ import { Employee } from "@/types/types";
 
 export const employees: Employee[] = [
     { firstName: "Evelyn", lastName: "Fredowska", position: "Software Developer", department: "IT", status: "Active" },
+    { firstName: "Anna", lastName: "Fredowska", position: "Software Developer", department: "IT", status: "Part-Time" },
     { firstName: "John", lastName: "Doe", position: "Project Manager", department: "Management", status: "Part-Time" },
     { firstName: "Alice", lastName: "Smith", position: "UI/UX Designer", department: "Design", status: "Remote" },
     { firstName: "Michael", lastName: "Johnson", position: "Database Administrator", department: "IT", status: "Active" },
@@ -21,5 +22,15 @@ export const employees: Employee[] = [
     { firstName: "Charlotte", lastName: "Green", position: "Scrum Master", department: "Agile", status: "Active" },
     { firstName: "Ethan", lastName: "Adams", position: "Machine Learning Engineer", department: "AI", status: "On Probation" },
     { firstName: "Isabella", lastName: "Baker", position: "Software Tester", department: "QA", status: "Active" },
-    { firstName: "Liam", lastName: "Gonzalez", position: "Systems Administrator", department: "IT", status: "Remote" }
+    { firstName: "Liam", lastName: "Gonzalez", position: "Systems Administrator", department: "IT", status: "Remote" },
+    { firstName: "Rachel", lastName: "Foster", position: "HR Manager", department: "HR", status: "Active" },
+    { firstName: "Nathan", lastName: "Morris", position: "Sales Associate", department: "Sales", status: "Part-Time" },
+    { firstName: "Julia", lastName: "Rivera", position: "Marketing Specialist", department: "Marketing", status: "Active" },
+    { firstName: "Lucas", lastName: "Ramirez", position: "Customer Support Lead", department: "Customer Support", status: "Remote" },
+    { firstName: "Mason", lastName: "Campbell", position: "Electrical Engineer", department: "Engineering", status: "Active" },
+    { firstName: "Ella", lastName: "Ortiz", position: "Mechanical Engineer", department: "Engineering", status: "On Leave" },
+    { firstName: "Aiden", lastName: "Ward", position: "Sales Manager", department: "Sales", status: "Active" },
+    { firstName: "Zoe", lastName: "Fowler", position: "Marketing Director", department: "Marketing", status: "Active" },
+    { firstName: "Jack", lastName: "Brewer", position: "Support Technician", department: "Customer Support", status: "On Probation" },
+    { firstName: "Clara", lastName: "Ellis", position: "Recruiter", department: "HR", status: "Part-Time" }
 ];
