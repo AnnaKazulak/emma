@@ -129,8 +129,7 @@ const selectedEmployee = ref<Employee | null>(null);
 
 const openDeleteDialog = (employee: Employee) => {
   selectedEmployee.value = employee;
-  dialogDelete.value = true; // Ensure this updates the state
-  console.log("Open delete dialog:", dialogDelete.value); // Debug
+  dialogDelete.value = true;
 };
 
 const updateDeleteDialog = (value: boolean) => {
@@ -148,10 +147,16 @@ const deleteEmployee = (employee: Employee) => {
 };
 
 const addNewItem = () => {
+  const newId = employees.value.length > 0 ? Math.max(...employees.value.map(emp => emp.id)) + 1 : 1;
   editedIndex.value = -1; // Indicates a new employee
   editedItem.value = {
-    id: 0,
-    firstName: "", lastName: "", position: "", department: "", status: "", dateOfBirth: "",
+    id: newId,
+    firstName: "",
+    lastName: "",
+    position: "",
+    department: "",
+    status: "",
+    dateOfBirth: "",
     startDate: "",
     address: {
       street: "",
@@ -161,8 +166,8 @@ const addNewItem = () => {
     }
   };
   dialog.value = true;
-  console.log("open add employ dialog");
 };
+
 
 const headers = [
   { title: "First Name", value: "firstName" },
@@ -176,7 +181,7 @@ const headers = [
 </script>
 
 <style scoped>
-/* Ensure the container takes full width */
+
 .v-container {
   width: 100%;
   max-width: 100%;
@@ -186,33 +191,31 @@ const headers = [
   flex-direction: column;
 }
 
-/* Full width tabs and toolbar */
+
 .tabs,
 .employee-toolbar {
   width: 100%;
 }
 
-/* List responsiveness */
+
 .employee-list {
   width: 100%;
   overflow-x: auto;
-  /* Allows table to scroll on small screens */
+
 }
 
-/* Responsive Table */
+
 .table {
   width: 100%;
   min-width: 600px;
-  /* Ensures table has a minimum width but can scroll on smaller screens */
+
 }
 
-/* Dialogs should be centered and responsive */
 .dialog {
   width: 90%;
   max-width: 600px;
 }
 
-/* Media queries for different screen sizes */
 @media (max-width: 768px) {
 
   .dialog,

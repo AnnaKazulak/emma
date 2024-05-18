@@ -37,7 +37,7 @@ const props = defineProps({
     dialog: Boolean,
     editedItem: {
         type: Object,
-        default: () => ({ firstName: "", lastName: "", position: "", department: "" })
+        default: () => ({ id: null, firstName: "", lastName: "", position: "", department: "" })
     }
 });
 
@@ -59,10 +59,10 @@ const dialogTitle = computed(() => {
 });
 
 const emitSave = () => {
-    emit('save', { ...localEditedItem.value });
-    emit('close');
-    console.log("save clicked",localEditedItem.value  )
+  emit('save', { ...localEditedItem.value });
+  emit('close');
 };
+
 
 const emitClose = () => {
     emit('update:dialog', false);

@@ -3,7 +3,7 @@ import { ref, computed, watch } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
 import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
-import { useRouter } from 'vue-router';  // Import useRouter
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{
   employees: Employee[];
@@ -11,8 +11,7 @@ const props = defineProps<{
   headers: any[];
 }>();
 
-const router = useRouter();  // Initialize the router instance
-
+const router = useRouter();
 const emit = defineEmits(['editItem', 'deleteItem']);
 
 const handleEdit = (item: Employee) => {
@@ -24,17 +23,14 @@ const handleDelete = (item: Employee) => {
 };
 
 const handleRowClick = (event, data) => {
-  // Assuming the actual data is under the 'item' property as per your log
   const actualItem = data.item;
   console.log("Received actual item on row click:", actualItem);
-  if (actualItem && actualItem.id) {  // Check if actualItem and actualItem.id are defined
+  if (actualItem && actualItem.id && actualItem.id !== 0) {
     router.push({ name: 'EmployeeDetails', params: { id: actualItem.id } });
   } else {
     console.error('Error: Employee ID is missing or undefined', actualItem);
   }
 };
-
-
 
 
 const filters = ref({
@@ -77,7 +73,7 @@ watch(filteredEmployees, (newVal) => {
 
   <!-- Data Table Display -->
   <v-data-table v-model="props.selected" :headers="props.headers" :items="filteredEmployees" item-key="id"
-    @click:row="handleRowClick"> <!-- Simplify this for now to check the first argument structure -->
+    @click:row="handleRowClick">
     <template v-slot:item.actions="{ item }">
       <v-icon class="me-2" size="small" @click.stop="handleEdit(item)">
         mdi-pencil
