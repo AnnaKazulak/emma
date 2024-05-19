@@ -4,7 +4,7 @@ export interface Employee {
   lastName: string;
   position: string;
   department: string;
-  status: string;
+  status: string[];
   dateOfBirth: string;  // Using ISO format string for dates
   startDate: string;    // Using ISO format string for dates
   address: {

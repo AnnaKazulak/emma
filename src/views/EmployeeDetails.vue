@@ -12,6 +12,7 @@
                     @update:activeVerticalTab="handleVerticalTabChange">
                     <div v-if="activeVerticalTab === 'public-profile'">
                         <h3>Hallo public-profile</h3>
+                        <EmployeePublicProfile v-if="activeVerticalTab === 'public-profile'" :employee="employee" />
                     </div>
                     <div v-if="activeVerticalTab === 'something'">
                         <h3>Hallo Something</h3>
@@ -39,6 +40,7 @@ import { useRoute } from 'vue-router';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import Tabs from '@/components/Tabs.vue';
 import VerticalTabs from '@/components/VerticalTabs.vue';
+import EmployeePublicProfile from '@/components/EmployeePublicProfile.vue';
 
 const employees = inject('employeesKey');
 const route = useRoute();
