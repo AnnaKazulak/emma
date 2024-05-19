@@ -13,27 +13,24 @@
     </div>
 </template>
 
-
 <script>
-import { defineComponent, ref, provide } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     name: 'Tabs',
     props: ['tabs', 'initialTab'],
-    setup(props) {
+    setup(props, { emit }) {
         const activeTab = ref(props.initialTab);
 
         const selectTab = (name) => {
             activeTab.value = name;
+            emit('update:activeTab', name);  // Emitting the active tab's name
         };
-
-        provide('activeTab', activeTab);
 
         return { activeTab, selectTab };
     }
 });
 </script>
-
 
 <style>
 .tabs {
@@ -42,7 +39,6 @@ export default defineComponent({
     padding: 10px;
     list-style-type: none;
 }
-
 
 .tabs button {
     display: flex;

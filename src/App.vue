@@ -4,11 +4,14 @@
 
 <script lang="ts" setup>
 import { provide, ref } from 'vue';
-import { employees as initialEmployees } from './data/employees';  
+import { employees as initialEmployees } from './data/employees';
 
 // Create a reactive reference for employees data
 const employees = ref(initialEmployees);
 
 // Provide the employees data under a specific key
 provide('employeesKey', employees);
+
+const activeTab = ref('personal-info');
+provide('activeTab', activeTab);
 </script>
