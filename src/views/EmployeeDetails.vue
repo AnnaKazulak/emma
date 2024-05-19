@@ -4,10 +4,22 @@
         <div v-else class="text-center">
             Employee details not found.
         </div>
-        <Tabs :tabs="tabs" :initialTab="initialTab" @update:activeTab="handleActiveTabChange" />
+        <Tabs :tabs="tabs" :initialTab="initialTab" @update:activeTab="handleTabChange" />
         <div class="tab-content">
             <div v-if="activeTab === 'personal-info'">
                 <h3>Hallo Personal Info</h3>
+                <VerticalTabs :tabs="verticalTabs" :initialTab="initialVerticalTab"
+                    @update:activeVerticalTab="handleVerticalTabChange">
+                    <div v-if="activeVerticalTab === 'public-profile'">
+                        <h3>Hallo public-profile</h3>
+                    </div>
+                    <div v-if="activeVerticalTab === 'something'">
+                        <h3>Hallo Something</h3>
+                    </div>
+                    <div v-if="activeVerticalTab === 'something-else'">
+                        <h3>Hallo Something Else</h3>
+                    </div>
+                </VerticalTabs>
             </div>
             <div v-if="activeTab === 'salary'">
                 <h3>Hallo Salary</h3>
@@ -19,11 +31,14 @@
     </v-container>
 </template>
 
+
+
 <script setup>
 import { computed, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import Tabs from '@/components/Tabs.vue';
+import VerticalTabs from '@/components/VerticalTabs.vue';
 
 const employees = inject('employeesKey');
 const route = useRoute();
@@ -37,11 +52,24 @@ const tabs = ref([
     { name: 'notes', icon: 'mdi-note-multiple', label: 'Notes' }
 ]);
 
-const initialTab = ref('personal-info');
-const activeTab = ref(initialTab.value);
+const verticalTabs = ref([
+    { name: 'public-profile', label: 'Public Profile' },
+    { name: 'something', label: 'Something' },
+    { name: 'something-else', label: 'Something Else' }
+]);
 
-const handleActiveTabChange = (newTab) => {
+const initialTab = ref('personal-info');
+const initialVerticalTab = ref('public-profile');
+const activeTab = ref(initialTab.value);
+const activeVerticalTab = ref(initialVerticalTab.value);
+
+const handleTabChange = (newTab) => {
     activeTab.value = newTab;
+};
+
+const handleVerticalTabChange = (newVerticalTab) => {
+    console.log("Received new vertical tab:", newVerticalTab);
+    activeVerticalTab.value = newVerticalTab;
 };
 </script>
 
@@ -49,7 +77,6 @@ const handleActiveTabChange = (newTab) => {
 .v-container {
     max-width: 100%;
     padding: 0;
-    /* Ensure container has no padding */
 }
 
 .v-card {
@@ -61,8 +88,6 @@ const handleActiveTabChange = (newTab) => {
 .text-h5 {
     font-weight: bold;
     font-size: 24px;
-    /* Enhanced readability */
-    line-height: 1.4;
 }
 
 .caption {
@@ -71,6 +96,5 @@ const handleActiveTabChange = (newTab) => {
 
 .v-chip {
     transform: translateY(-20%);
-    /* Position adjustment */
 }
 </style>
