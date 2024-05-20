@@ -14,9 +14,10 @@
           @delete="deleteEmployee" />
       </Tab>
 
-      <!-- Tab 2: Just a placeholder text -->
-      <Tab name="two">
-        <div>This is the second tab.</div>
+      <Tab name="dashboard">
+        <h2>Employee Status Distribution</h2>
+        <DoughnutChart :data="employees" category="status" title="Status Distribution" />
+        <DoughnutChart :data="employees" category="department" title="Department Distribution" />
       </Tab>
 
       <!-- Tab 3: Just a placeholder text -->
@@ -39,6 +40,7 @@ import EmployeeToolbar from "@/components/EmployeeToolbar.vue";
 import EmployeeList from "@/components/EmployeeList.vue";
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
+import DoughnutChart from "@/components/DoughnutChart.vue";
 
 
 // Inject the shared employees state
@@ -48,7 +50,7 @@ const search = ref('');
 
 const tabs = ref([
   { name: 'EmployeeList', label: 'Employee List', icon: 'mdi-account-group' },
-  { name: 'two', label: 'Item Two', icon: 'mdi-card-account-details-outline' },
+  { name: 'dashboard', label: 'Dashboard', icon: 'mdi-card-account-details-outline' },
   { name: 'three', label: 'Item Three', icon: 'mdi-camera-image' }
 ]);
 
