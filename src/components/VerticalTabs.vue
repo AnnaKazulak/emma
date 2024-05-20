@@ -50,7 +50,7 @@ export default defineComponent({
 
 .vertical-tab-content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 10px 20px;
 }
 
 button {

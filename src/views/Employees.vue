@@ -30,7 +30,7 @@
 
 
 <script setup lang="ts">
-import { computed, ref,inject } from "vue";
+import { computed, ref, inject } from "vue";
 import { Employee } from "@/types/types";
 import { employees as employeeData } from "@/data/employees";
 import EmployeeDialog from "@/components/EmployeeDialog.vue";
@@ -181,7 +181,6 @@ const headers = [
 </script>
 
 <style scoped>
-
 .v-container {
   width: 100%;
   max-width: 100%;

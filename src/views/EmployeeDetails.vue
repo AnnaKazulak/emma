@@ -7,12 +7,12 @@
         <Tabs :tabs="tabs" :initialTab="initialTab" @update:activeTab="handleTabChange" />
         <div class="tab-content">
             <div v-if="activeTab === 'personal-info'">
-                <h3>Hallo Personal Info</h3>
                 <VerticalTabs :tabs="verticalTabs" :initialTab="initialVerticalTab"
                     @update:activeVerticalTab="handleVerticalTabChange">
                     <div v-if="activeVerticalTab === 'public-profile'">
-                        <h3>Hallo public-profile</h3>
-                        <EmployeePublicProfile v-if="activeVerticalTab === 'public-profile'" :employee="employee" />
+
+                        <EmployeePublicProfile :employee="employee" @update-employee="handleEmployeeUpdate" />
+
                     </div>
                     <div v-if="activeVerticalTab === 'something'">
                         <h3>Hallo Something</h3>
@@ -33,7 +33,6 @@
 </template>
 
 
-
 <script setup>
 import { computed, ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
@@ -42,10 +41,12 @@ import Tabs from '@/components/Tabs.vue';
 import VerticalTabs from '@/components/VerticalTabs.vue';
 import EmployeePublicProfile from '@/components/EmployeePublicProfile.vue';
 
+// Inject the shared employees state
 const employees = inject('employeesKey');
 const route = useRoute();
 const employeeId = route.params.id;
 
+// This computed property finds the specific employee based on the route parameter
 const employee = computed(() => employees.value.find(emp => emp.id === parseInt(employeeId)));
 
 const tabs = ref([
@@ -73,7 +74,16 @@ const handleVerticalTabChange = (newVerticalTab) => {
     console.log("Received new vertical tab:", newVerticalTab);
     activeVerticalTab.value = newVerticalTab;
 };
+
+// This function handles the update of the employee data; make sure it doesn't conflict with other declarations
+function handleEmployeeUpdate(updatedEmployee) {
+    const index = employees.value.findIndex(emp => emp.id === updatedEmployee.id);
+    if (index !== -1) {
+        employees.value[index] = { ...updatedEmployee };
+    }
+}
 </script>
+
 
 <style scoped>
 .v-container {
