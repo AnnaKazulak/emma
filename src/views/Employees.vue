@@ -15,9 +15,7 @@
       </Tab>
 
       <Tab name="dashboard">
-        <h2>Employee Status Distribution</h2>
-        <DoughnutChart :data="employees" category="status" title="Status Distribution" />
-        <DoughnutChart :data="employees" category="department" title="Department Distribution" />
+        <EmployeeDashboard />
       </Tab>
 
       <!-- Tab 3: Just a placeholder text -->
@@ -41,10 +39,11 @@ import EmployeeList from "@/components/EmployeeList.vue";
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
 import DoughnutChart from "@/components/DoughnutChart.vue";
-
+import EmployeeDashboard from '@/components/EmployeeDashboard.vue';
 
 // Inject the shared employees state
 const employees = inject('employeesKey');
+
 
 const search = ref('');
 

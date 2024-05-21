@@ -9,7 +9,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1990-05-21",
         startDate: "2015-08-15",
-        address: { street: "Main St", houseNumber: "123", zipCode: "10001", city: "New York" }
+        address: { street: "Main St", houseNumber: "123", zipCode: "10001", city: "New York" },
+        gender: "Female"
     },
     {id: 2,
         firstName: "Anna",
@@ -19,7 +20,8 @@ export const employees: Employee[] = [
         status: "Part-Time",
         dateOfBirth: "1992-03-10",
         startDate: "2017-06-20",
-        address: { street: "Oak St", houseNumber: "50", zipCode: "10002", city: "New York" }
+        address: { street: "Oak St", houseNumber: "50", zipCode: "10002", city: "New York" },
+        gender: "Divers"
     },
     {id: 3,
         firstName: "John",
@@ -29,7 +31,8 @@ export const employees: Employee[] = [
         status: "Part-Time",
         dateOfBirth: "1985-07-22",
         startDate: "2010-04-01",
-        address: { street: "Third Ave", houseNumber: "321", zipCode: "10003", city: "New York" }
+        address: { street: "Third Ave", houseNumber: "321", zipCode: "10003", city: "New York" },
+        gender: "Divers"
     },
     {id: 4,
         firstName: "Alice",
@@ -39,7 +42,8 @@ export const employees: Employee[] = [
         status: "Remote",
         dateOfBirth: "1989-12-14",
         startDate: "2014-05-23",
-        address: { street: "Maple St", houseNumber: "200", zipCode: "10004", city: "New York" }
+        address: { street: "Maple St", houseNumber: "200", zipCode: "10004", city: "New York" },
+        gender: "Divers"
     },
     {id: 5,
         firstName: "Michael",
@@ -49,7 +53,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1980-09-15",
         startDate: "2008-07-19",
-        address: { street: "Cedar Ln", houseNumber: "300", zipCode: "10005", city: "New York" }
+        address: { street: "Cedar Ln", houseNumber: "300", zipCode: "10005", city: "New York" },
+        gender: "Male"
     },
     {id: 6,
         firstName: "Emily",
@@ -59,7 +64,8 @@ export const employees: Employee[] = [
         status: "On Leave",
         dateOfBirth: "1991-11-08",
         startDate: "2016-01-15",
-        address: { street: "Pine St", houseNumber: "50", zipCode: "10006", city: "New York" }
+        address: { street: "Pine St", houseNumber: "50", zipCode: "10006", city: "New York" },
+        gender: "Female"
     },
     {id: 7,
         firstName: "David",
@@ -69,7 +75,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1988-10-10",
         startDate: "2013-03-15",
-        address: { street: "Fourth Ave", houseNumber: "780", zipCode: "10007", city: "New York" }
+        address: { street: "Fourth Ave", houseNumber: "780", zipCode: "10007", city: "New York" },
+        gender: "Divers"
     },
     {id: 8,
         firstName: "Sophia",
@@ -79,7 +86,8 @@ export const employees: Employee[] = [
         status: "On Probation",
         dateOfBirth: "1994-04-22",
         startDate: "2018-08-01",
-        address: { street: "Elm St", houseNumber: "95", zipCode: "10008", city: "New York" }
+        address: { street: "Elm St", houseNumber: "95", zipCode: "10008", city: "New York" },
+        gender: "Female"
     },
     {id: 9,
         firstName: "Daniel",
@@ -89,7 +97,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1990-06-09",
         startDate: "2015-05-20",
-        address: { street: "Maple Ave", houseNumber: "102", zipCode: "10009", city: "New York" }
+        address: { street: "Maple Ave", houseNumber: "102", zipCode: "10009", city: "New York" },
+        gender: "Male"
     },
     {id: 10,
         firstName: "Olivia",
@@ -99,8 +108,10 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1987-03-30",
         startDate: "2012-09-23",
-        address: { street: "High St", houseNumber: "411", zipCode: "10010", city: "New York" }
+        address: { street: "High St", houseNumber: "411", zipCode: "10010", city: "New York" },
+        gender: "Female"
     },
+
     {id: 11,
         firstName: "James",
         lastName: "Taylor",
@@ -109,7 +120,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1991-01-25",
         startDate: "2016-07-18",
-        address: { street: "Lake Rd", houseNumber: "67", zipCode: "10011", city: "New York" }
+        address: { street: "Lake Rd", houseNumber: "67", zipCode: "10011", city: "New York" },
+        gender: "Male"
     },
     {id: 12,
         firstName: "Emma",
@@ -119,7 +131,8 @@ export const employees: Employee[] = [
         status: "On Leave",
         dateOfBirth: "1985-12-17",
         startDate: "2010-11-10",
-        address: { street: "River Rd", houseNumber: "803", zipCode: "10012", city: "New York" }
+        address: { street: "River Rd", houseNumber: "803", zipCode: "10012", city: "New York" },
+        gender: "Female"
     },
     {id: 13,
         firstName: "William",
@@ -129,7 +142,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1992-07-11",
         startDate: "2017-03-15",
-        address: { street: "Chestnut St", houseNumber: "200", zipCode: "10013", city: "New York" }
+        address: { street: "Chestnut St", houseNumber: "200", zipCode: "10013", city: "New York" },
+        gender: "Male"
     },
     {id: 14,
         firstName: "Ava",
@@ -139,7 +153,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1993-05-14",
         startDate: "2018-10-01",
-        address: { street: "Orchard St", houseNumber: "33", zipCode: "10014", city: "New York" }
+        address: { street: "Orchard St", houseNumber: "33", zipCode: "10014", city: "New York" },
+        gender: "Female"
     },
     {
         id: 15,
@@ -150,7 +165,8 @@ export const employees: Employee[] = [
         status: "Remote",
         dateOfBirth: "1983-09-19",
         startDate: "2008-04-22",
-        address: { street: "Broadway", houseNumber: "455", zipCode: "10015", city: "New York" }
+        address: { street: "Broadway", houseNumber: "455", zipCode: "10015", city: "New York" },
+        gender: "Male"
     },
     {
         id: 16,
@@ -161,7 +177,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1989-08-25",
         startDate: "2014-12-04",
-        address: { street: "Vine St", houseNumber: "89", zipCode: "10016", city: "New York" }
+        address: { street: "Vine St", houseNumber: "89", zipCode: "10016", city: "New York" },
+        gender: "Female"
     },
     {
         id: 17,
@@ -172,7 +189,8 @@ export const employees: Employee[] = [
         status: "Suspended",
         dateOfBirth: "1990-11-13",
         startDate: "2016-02-27",
-        address: { street: "Oak Lane", houseNumber: "312", zipCode: "10017", city: "New York" }
+        address: { street: "Oak Lane", houseNumber: "312", zipCode: "10017", city: "New York" },
+        gender: "Male"
     },
     {
         id: 18,
@@ -183,7 +201,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1992-08-19",
         startDate: "2017-07-19",
-        address: { street: "Spruce St", houseNumber: "120", zipCode: "10018", city: "New York" }
+        address: { street: "Spruce St", houseNumber: "120", zipCode: "10018", city: "New York" },
+        gender: "Female"
     },
     {
         id: 19,
@@ -194,7 +213,8 @@ export const employees: Employee[] = [
         status: "On Probation",
         dateOfBirth: "1991-03-02",
         startDate: "2015-11-23",
-        address: { street: "Pine Avenue", houseNumber: "44", zipCode: "10019", city: "New York" }
+        address: { street: "Pine Avenue", houseNumber: "44", zipCode: "10019", city: "New York" },
+        gender: "Male"
     },
     {
         id: 20,
@@ -205,7 +225,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1986-10-07",
         startDate: "2011-03-15",
-        address: { street: "Maple Lane", houseNumber: "58", zipCode: "10020", city: "New York" }
+        address: { street: "Maple Lane", houseNumber: "58", zipCode: "10020", city: "New York" },
+        gender: "Female"
     },
     {
         id: 21,
@@ -216,7 +237,8 @@ export const employees: Employee[] = [
         status: "Remote",
         dateOfBirth: "1994-06-15",
         startDate: "2018-08-01",
-        address: { street: "Elm Street", houseNumber: "90", zipCode: "10021", city: "New York" }
+        address: { street: "Elm Street", houseNumber: "90", zipCode: "10021", city: "New York" },
+        gender: "Male"
     },
     {
         id: 22,
@@ -227,7 +249,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1989-11-23",
         startDate: "2014-04-17",
-        address: { street: "Cedar St", houseNumber: "205", zipCode: "10022", city: "New York" }
+        address: { street: "Cedar St", houseNumber: "205", zipCode: "10022", city: "New York" },
+        gender: "Female"
     },
     {
         id: 23,
@@ -238,7 +261,8 @@ export const employees: Employee[] = [
         status: "Part-Time",
         dateOfBirth: "1992-01-09",
         startDate: "2018-05-20",
-        address: { street: "Birch St", houseNumber: "59", zipCode: "10023", city: "New York" }
+        address: { street: "Birch St", houseNumber: "59", zipCode: "10023", city: "New York" },
+        gender: "Male"
     },
     {
         id: 24,
@@ -249,7 +273,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1987-04-25",
         startDate: "2013-08-01",
-        address: { street: "Walnut St", houseNumber: "172", zipCode: "10024", city: "New York" }
+        address: { street: "Walnut St", houseNumber: "172", zipCode: "10024", city: "New York" },
+        gender: "Female"
     },
     {
         id: 25,
@@ -260,7 +285,8 @@ export const employees: Employee[] = [
         status: "Remote",
         dateOfBirth: "1990-02-17",
         startDate: "2015-09-23",
-        address: { street: "Cherry St", houseNumber: "88", zipCode: "10025", city: "New York" }
+        address: { street: "Cherry St", houseNumber: "88", zipCode: "10025", city: "New York" },
+        gender: "Male"
     },
     {
         id: 26,
@@ -271,7 +297,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1988-03-15",
         startDate: "2012-06-01",
-        address: { street: "2nd St", houseNumber: "300", zipCode: "10026", city: "New York" }
+        address: { street: "2nd St", houseNumber: "300", zipCode: "10026", city: "New York" },
+        gender: "Male"
     },
     {
         id: 27,
@@ -282,7 +309,8 @@ export const employees: Employee[] = [
         status: "On Leave",
         dateOfBirth: "1993-09-10",
         startDate: "2018-12-10",
-        address: { street: "3rd St", houseNumber: "414", zipCode: "10027", city: "New York" }
+        address: { street: "3rd St", houseNumber: "414", zipCode: "10027", city: "New York" },
+        gender: "Female"
     },
     {
         id: 28,
@@ -293,7 +321,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1985-06-21",
         startDate: "2009-07-14",
-        address: { street: "Queen St", houseNumber: "204", zipCode: "10028", city: "New York" }
+        address: { street: "Queen St", houseNumber: "204", zipCode: "10028", city: "New York" },
+        gender: "Male"
     },
     {
         id: 29,
@@ -304,7 +333,8 @@ export const employees: Employee[] = [
         status: "Active",
         dateOfBirth: "1990-12-30",
         startDate: "2015-03-09",
-        address: { street: "King St", houseNumber: "101", zipCode: "10029", city: "New York" }
+        address: { street: "King St", houseNumber: "101", zipCode: "10029", city: "New York" },
+        gender: "Female"
     },
     {
         id: 30,
@@ -315,7 +345,8 @@ export const employees: Employee[] = [
         status: "On Probation",
         dateOfBirth: "1995-07-28",
         startDate: "2020-01-15",
-        address: { street: "Prince St", houseNumber: "117", zipCode: "10030", city: "New York" }
+        address: { street: "Prince St", houseNumber: "117", zipCode: "10030", city: "New York" },
+        gender: "Male"
     },
     {
         id: 31,
@@ -326,6 +357,9 @@ export const employees: Employee[] = [
         status: "Part-Time",
         dateOfBirth: "1996-05-19",
         startDate: "2021-02-01",
-        address: { street: "Princess St", houseNumber: "300", zipCode: "10031", city: "New York" }
+        address: { street: "Princess St", houseNumber: "300", zipCode: "10031", city: "New York" },
+        gender: "Female"
     }
 ];
+
+
