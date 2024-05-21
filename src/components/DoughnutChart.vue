@@ -2,12 +2,13 @@
     <v-card>
         <v-card-title>{{ title }}</v-card-title>
         <v-card-text>
-            <div style="position: relative; height:40vh; width:80vw">
+            <div style="position: relative; width: 100%; height: 100%;">
                 <canvas ref="chartContainer"></canvas>
             </div>
         </v-card-text>
     </v-card>
 </template>
+
 
 <script setup>
 import { ref, onMounted, watchEffect, onBeforeUnmount } from 'vue';
@@ -92,11 +93,22 @@ onBeforeUnmount(() => {
     }
 });
 </script>
-
 <style scoped>
-
 .v-card {
     margin-bottom: 30px;
+    width: 100%; /* Ensures card takes full width of the container */
+    height: auto; /* Adjust height automatically based on content */
 }
 
+.v-card-text {
+    position: relative;
+    padding: 16px;
+    height: 350px; /* Set a fixed height or use media queries to adjust */
+}
+
+@media (max-width: 600px) {
+    .v-card-text {
+        height: 250px; /* Smaller fixed height for smaller screens */
+    }
+}
 </style>
