@@ -1,20 +1,19 @@
 <template>
   <v-container>
     <v-row>
-      <v-col v-for="item in draggableItems.items" :key="item.label || item.title" :cols="12"
-        :sm="item.type === 'numberCard' ? 6 : 12" :md="item.type === 'numberCard' ? 3 : 12"
-        :lg="item.type === 'numberCard' ? 3 : 12" draggable="true" @dragstart="dragStart($event, item)"
-        @drop="drop($event, item)" @dragover.prevent>
+      <v-col v-for="item in draggableItems.items" :key="item.title" cols="12" sm="12" md="6" lg="6" draggable="true"
+        @dragstart="dragStart($event, item)" @drop="drop($event, item)" @dragover.prevent>
+        <!-- Render components based on type and chartType -->
         <template v-if="item.type === 'numberCard'">
-          <NumberCard :icon="item.icon" :count="item.count" :label="item.label" />
+          <NumberCardContainer :cards="numberCards" />
         </template>
-        <!-- Check for doughnut chart specifically -->
-        <template v-else-if="item.type === 'chart' && item.chartType === 'doughnut'">
-          <DoughnutChart :data="employees" :category="item.dataKey" :title="item.title" />
-        </template>
-        <!-- Check for bar chart specifically -->
-        <template v-else-if="item.type === 'chart' && item.chartType === 'bar'">
-          <BarChart :chart-data="prepareBarChartData(item.dataKey)" :options="barChartOptions" />
+        <template v-else-if="item.type === 'chart'">
+          <template v-if="item.chartType === 'doughnut'">
+            <DoughnutChart :data="employees" :category="item.dataKey" :title="item.title" />
+          </template>
+          <template v-else-if="item.chartType === 'bar'">
+            <BarChart :chart-data="prepareBarChartData(item.dataKey)" :title="item.title" :options="barChartOptions" />
+          </template>
         </template>
       </v-col>
     </v-row>
@@ -23,28 +22,30 @@
 
 
 
-
 <script setup>
 import { computed, inject, ref, reactive } from 'vue';
-import NumberCard from './NumberCard.vue';
+import NumberCardContainer from './NumberCardContainer.vue';
 import DoughnutChart from './DoughnutChart.vue';
 import BarChart from './BarChart.vue';
 
-
 const employees = inject('employeesKey', ref([]));
 
+// Include NumberCard type in the draggableItems
 const draggableItems = reactive({
   items: [
-    { type: 'numberCard', icon: 'mdi-account-group', count: computed(() => employees.value.length), label: 'Total Employees' },
-    { type: 'numberCard', icon: 'mdi-gender-female', count: computed(() => employees.value.filter(emp => emp.gender === "Female").length), label: 'Female' },
-    { type: 'numberCard', icon: 'mdi-gender-male', count: computed(() => employees.value.filter(emp => emp.gender === "Male").length), label: 'Male' },
-    { type: 'numberCard', icon: 'mdi-gender-non-binary', count: computed(() => employees.value.filter(emp => emp.gender === "Divers").length), label: 'Divers' },
+    { type: 'numberCard', label: 'Number Cards' }, // This should refer to numberCards data
     { type: 'chart', dataKey: 'status', title: 'Status Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Department Distribution', chartType: 'doughnut' },
-    { type: 'chart', dataKey: 'department', title: 'Department Distribution', chartType: 'bar' }
+    { type: 'chart', dataKey: 'department', title: 'Bar Department Distribution', chartType: 'bar' }
   ]
 });
 
+const numberCards = computed(() => [
+  { icon: 'mdi-account-group', count: employees.value.length, label: 'Total Employees' },
+  { icon: 'mdi-gender-female', count: employees.value.filter(emp => emp.gender === "Female").length, label: 'Female' },
+  { icon: 'mdi-gender-male', count: employees.value.filter(emp => emp.gender === "Male").length, label: 'Male' },
+  { icon: 'mdi-gender-non-binary', count: employees.value.filter(emp => emp.gender === "Divers").length, label: 'Divers' }
+]);
 
 const draggedItem = ref(null);
 
@@ -60,7 +61,6 @@ function drop(event, targetItem) {
     draggableItems.items.splice(targetIndex, 0, draggableItems.items.splice(draggedIndex, 1)[0]);
   }
 }
-
 
 const barChartOptions = {
   scales: {
@@ -87,5 +87,4 @@ function prepareBarChartData(key) {
     }]
   };
 }
-
 </script>

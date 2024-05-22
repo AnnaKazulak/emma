@@ -1,12 +1,12 @@
 <template>
-    <v-card>
+    <!-- <v-card> -->
         <v-card-title>{{ title }}</v-card-title>
         <v-card-text>
             <div style="position: relative; width: 100%; height: 100%;">
                 <canvas ref="chartContainer"></canvas>
             </div>
         </v-card-text>
-    </v-card>
+    <!-- </v-card> -->
 </template>
 
 
@@ -93,22 +93,24 @@ onBeforeUnmount(() => {
     }
 });
 </script>
+
+
 <style scoped>
 .v-card {
     margin-bottom: 30px;
-    width: 100%; /* Ensures card takes full width of the container */
-    height: auto; /* Adjust height automatically based on content */
+    width: 100%;
+    height: auto;
 }
 
 .v-card-text {
     position: relative;
     padding: 16px;
-    height: 350px; /* Set a fixed height or use media queries to adjust */
+    height: 350px;
 }
 
 @media (max-width: 600px) {
     .v-card-text {
-        height: 250px; /* Smaller fixed height for smaller screens */
+        height: 250px;
     }
 }
 </style>
