@@ -1,19 +1,14 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-card class="number-card d-flex">
-        <div class="count-column">
-          <div class="number">{{ count }}</div>
-        </div>
-        <div class="icon-label-column">
-          <v-icon :size="65" color="#f79202">{{ icon }}</v-icon>
-          <div class="label">{{ label }}</div>
-        </div>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-card class="number-card d-flex">
+    <div class="count-column">
+      <div class="number">{{ count }}</div>
+    </div>
+    <div class="icon-label-column">
+      <v-icon :size="65" color="#f79202">{{ icon }}</v-icon>
+      <div class="label">{{ label }}</div>
+    </div>
+  </v-card>
 </template>
-
 
 <script setup>
 defineProps({
@@ -22,6 +17,7 @@ defineProps({
   label: String
 });
 </script>
+
 
 <style scoped>
 .number-card {

@@ -1,30 +1,22 @@
 <template>
-    <!-- <v-card> -->
-        <v-container>
-            <v-row>
-                <v-col
-                    v-for="(card, index) in cards"
-                    :key="card.label"
-                    :cols="12" :sm="6" :md="6" :lg="6"
-                    draggable="true"
-                    @dragstart="dragStart(index, $event)"
-                    @dragover.prevent
-                    @drop="drop(index, $event)"
-                >
-                    <NumberCard :icon="card.icon" :count="card.count" :label="card.label" />
-                </v-col>
-            </v-row>
-        </v-container>
-    <!-- </v-card> -->
-</template>
+    <div>
+      <v-row>
+        <!-- Directly use props.cards -->
+        <v-col v-for="card in props.cards" :key="card.label" cols="12" sm="6">
+          <NumberCard :icon="card.icon" :count="card.count" :label="card.label" />
+        </v-col>
+      </v-row>
+    </div>
+  </template>
 
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, onUpdated, } from 'vue';
 import NumberCard from './NumberCard.vue';
 
+// Directly define and use props
 const props = defineProps({
-    cards: Array
+  cards: Array
 });
 
 const cards = ref(props.cards);
@@ -47,6 +39,14 @@ function dragOver(event) {
 function dragLeave(event) {
     event.target.classList.remove('drag-over');
 }
+
+
+// const forceUpdate = ref(0);
+
+// onUpdated(() => {
+//   forceUpdate.value++;  // increment to force reactivity system
+// });
+
 
 </script>
 

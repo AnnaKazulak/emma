@@ -3,7 +3,6 @@
     <v-row>
       <v-col v-for="item in draggableItems.items" :key="item.title" cols="12" sm="12" md="6" lg="6" draggable="true"
         @dragstart="dragStart($event, item)" @drop="drop($event, item)" @dragover.prevent>
-        <!-- Render components based on type and chartType -->
         <template v-if="item.type === 'numberCard'">
           <NumberCardContainer :cards="numberCards" />
         </template>
@@ -22,6 +21,7 @@
 
 
 
+
 <script setup>
 import { computed, inject, ref, reactive } from 'vue';
 import NumberCardContainer from './NumberCardContainer.vue';
@@ -29,6 +29,7 @@ import DoughnutChart from './DoughnutChart.vue';
 import BarChart from './BarChart.vue';
 
 const employees = inject('employeesKey', ref([]));
+
 
 // Include NumberCard type in the draggableItems
 const draggableItems = reactive({
@@ -87,4 +88,5 @@ function prepareBarChartData(key) {
     }]
   };
 }
+
 </script>
