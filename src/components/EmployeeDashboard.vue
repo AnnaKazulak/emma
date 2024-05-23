@@ -35,6 +35,7 @@ const employees = inject('employeesKey', ref([]));
 const draggableItems = reactive({
   items: [
     { type: 'numberCard', label: 'Number Cards' }, // This should refer to numberCards data
+    { type: 'chart', dataKey: 'gender', title: 'Gender Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'status', title: 'Status Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Department Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Bar Department Distribution', chartType: 'bar' }

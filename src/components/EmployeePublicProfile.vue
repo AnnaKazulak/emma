@@ -7,10 +7,17 @@
             <v-text-field v-if="editMode" label="Last Name" v-model="editableEmployee.lastName"></v-text-field>
             <div v-else>Last Name: {{ editableEmployee.lastName }}</div>
 
+            <v-select v-if="editMode" label="Gender" :items="['Male', 'Female', 'Divers']"
+                v-model="editableEmployee.gender" chips></v-select>
+            <div v-else>Gender: {{ editableEmployee.gender }}</div>
+
             <v-text-field v-if="editMode" label="Position" v-model="editableEmployee.position"></v-text-field>
             <div v-else>Position: {{ editableEmployee.position }}</div>
 
-            <v-text-field v-if="editMode" label="Department" v-model="editableEmployee.department"></v-text-field>
+            <v-select v-if="editMode" label="Department" :items="[
+                'Engineering', 'Human Resources', 'Marketing',
+                 'Sales', 'Finance', 'Legal', 'IT', 'Other', 'AI', 'UX','Design'
+            ]" v-model="editableEmployee.department" chips></v-select>
             <div v-else>Department: {{ editableEmployee.department }}</div>
 
             <v-select v-if="editMode" label="Status" :items="[
@@ -46,7 +53,7 @@
     </v-card>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, watch } from 'vue';
+import { defineComponent, reactive, ref, watch } from 'vue';
 
 export default defineComponent({
     name: 'EmployeePublicProfile',
@@ -68,7 +75,8 @@ export default defineComponent({
                 houseNumber: '',
                 zipCode: '',
                 city: ''
-            }
+            },
+            gender: ""
         });
 
         const editMode = ref(false);

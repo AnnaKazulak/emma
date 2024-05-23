@@ -91,6 +91,7 @@ const editedItem = ref<Employee>({
     zipCode: "",
     city: "",
   },
+  gender: ""
 });
 
 const editItem = (item: Employee) => {
@@ -111,7 +112,7 @@ const close = () => {
       houseNumber: "",
       zipCode: "",
       city: "",
-    }
+    }, gender: ""
   };
 };
 
@@ -164,7 +165,7 @@ const addNewItem = () => {
       houseNumber: "",
       zipCode: "",
       city: "",
-    }
+    }, gender: ""
   };
   dialog.value = true;
 };
