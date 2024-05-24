@@ -3,9 +3,12 @@
     <h1>Hallo Employee Page</h1>
     <EmployeeToolbar @update:search="search = $event" :addNewItem="addNewItem" />
 
-    <!-- Tabs Component -->
-    <Tabs :tabs="tabs" initial-tab="EmployeeList">
-      <!-- Tab 1: Employee List -->
+    <Tabs :tabs="tabs" initial-tab="dashboard">
+
+      <Tab name="dashboard">
+        <EmployeeDashboard />
+      </Tab>
+
       <Tab name="EmployeeList">
         <EmployeeList :employees="filteredEmployees" :selected="selected" :headers="headers" @editItem="editItem"
           @deleteItem="openDeleteDialog" />
@@ -14,11 +17,6 @@
           @delete="deleteEmployee" />
       </Tab>
 
-      <Tab name="dashboard">
-        <EmployeeDashboard />
-      </Tab>
-
-      <!-- Tab 3: Just a placeholder text -->
       <Tab name="three">
         <div>This is the third tab.</div>
       </Tab>
@@ -31,14 +29,12 @@
 <script setup lang="ts">
 import { computed, ref, inject } from "vue";
 import { Employee } from "@/types/types";
-import { employees as employeeData } from "@/data/employees";
 import EmployeeDialog from "@/components/EmployeeDialog.vue";
 import DeleteEmployeeDialog from "@/components/DeleteEmployeeDialog.vue";
 import EmployeeToolbar from "@/components/EmployeeToolbar.vue";
 import EmployeeList from "@/components/EmployeeList.vue";
 import Tabs from "@/components/Tabs.vue";
 import Tab from "@/components/Tab.vue";
-import DoughnutChart from "@/components/DoughnutChart.vue";
 import EmployeeDashboard from '@/components/EmployeeDashboard.vue';
 
 // Inject the shared employees state
@@ -48,8 +44,9 @@ const employees = inject('employeesKey');
 const search = ref('');
 
 const tabs = ref([
-  { name: 'EmployeeList', label: 'Employee List', icon: 'mdi-account-group' },
   { name: 'dashboard', label: 'Dashboard', icon: 'mdi-card-account-details-outline' },
+  { name: 'EmployeeList', label: 'Employee List', icon: 'mdi-account-group' },
+
   { name: 'three', label: 'Item Three', icon: 'mdi-camera-image' }
 ]);
 
