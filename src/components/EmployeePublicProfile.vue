@@ -15,7 +15,7 @@
             <div v-else>Position: {{ editableEmployee.position }}</div>
 
             <v-select v-if="editMode" label="Department" :items="[
-                'Engineering', 'Human Resources', 'Marketing',
+                'Engineering', 'HR', 'Marketing',
                  'Sales', 'Finance', 'Legal', 'IT', 'Other', 'AI', 'UX','Design'
             ]" v-model="editableEmployee.department" chips></v-select>
             <div v-else>Department: {{ editableEmployee.department }}</div>
