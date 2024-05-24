@@ -1,17 +1,17 @@
 <template>
     <!-- <v-card> -->
-        <v-card-title>{{ title }}</v-card-title>
-        <v-card-text>
-            <div style="position: relative; width: 100%; height: 100%;">
-                <canvas ref="chartContainer"></canvas>
-            </div>
-        </v-card-text>
+    <v-card-title>{{ title }}</v-card-title>
+    <v-card-text>
+        <div style="position: relative; width: 100%; height: 100%;">
+            <canvas ref="chartContainer"></canvas>
+        </div>
+    </v-card-text>
     <!-- </v-card> -->
 </template>
 
 
 <script setup>
-import { ref, onMounted, watchEffect, onBeforeUnmount } from 'vue';
+import { ref, onMounted, watchEffect, onBeforeUnmount, watch, defineProps, inject } from 'vue';
 import { Chart, registerables } from 'chart.js';
 
 // Register the necessary components for Chart.js
@@ -34,6 +34,8 @@ const props = defineProps({
         default: () => ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
     }
 });
+
+const employees = inject('employeesKey');
 
 const chartData = ref({
     labels: [],
@@ -62,12 +64,11 @@ const updateChartData = () => {
     };
 };
 
-onMounted(updateChartData);
-
 const chartContainer = ref(null);
 let myChart = null;
 
 onMounted(() => {
+    updateChartData();
     if (chartContainer.value) {
         myChart = new Chart(chartContainer.value.getContext('2d'), {
             type: props.chartType,
@@ -92,7 +93,17 @@ onBeforeUnmount(() => {
         myChart.destroy();
     }
 });
+
+// Watch employees for updates
+watch(employees, (newData) => {
+    updateChartData();
+    if (myChart) {
+        myChart.update();
+    }
+}, { deep: true });
+
 </script>
+
 
 
 <style scoped>

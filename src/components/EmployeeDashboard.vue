@@ -8,10 +8,10 @@
         </template>
         <template v-else-if="item.type === 'chart'">
           <template v-if="item.chartType === 'doughnut'">
-            <DoughnutChart :data="employees" :category="item.dataKey" :title="item.title" />
+            <DoughnutChart :key="forceUpdate" :data="employees" :category="item.dataKey" :title="item.title" />
           </template>
           <template v-else-if="item.chartType === 'bar'">
-            <BarChart :chart-data="prepareBarChartData(item.dataKey)" :title="item.title" :options="barChartOptions" />
+            <BarChart :key="forceUpdate" :data="employees" :category="item.dataKey" :title="item.title" />
           </template>
         </template>
       </v-col>
@@ -23,18 +23,21 @@
 
 
 <script setup>
-import { computed, inject, ref, reactive } from 'vue';
+import { computed, inject, ref, reactive, watch, onBeforeUpdate, onUpdated } from 'vue';
 import NumberCardContainer from './NumberCardContainer.vue';
 import DoughnutChart from './DoughnutChart.vue';
 import BarChart from './BarChart.vue';
 
 const employees = inject('employeesKey', ref([]));
+const forceUpdate = ref(0);
 
+watch(employees, () => {
+  forceUpdate.value++;  // Increment to trigger update
+}, { deep: true });
 
-// Include NumberCard type in the draggableItems
 const draggableItems = reactive({
   items: [
-    { type: 'numberCard', label: 'Number Cards' }, // This should refer to numberCards data
+    { type: 'numberCard', label: 'Number Cards' },
     { type: 'chart', dataKey: 'gender', title: 'Gender Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'status', title: 'Status Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Department Distribution', chartType: 'doughnut' },
@@ -89,5 +92,18 @@ function prepareBarChartData(key) {
     }]
   };
 }
+
+let chartInstance = null;
+
+onBeforeUpdate(() => {
+  if (chartInstance) {
+    chartInstance.destroy(); // Destroy the old chart instance to prevent memory leaks
+  }
+});
+
+onUpdated(() => {
+  initChart(); // Function to initialize the chart
+});
+
 
 </script>
