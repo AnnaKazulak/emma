@@ -1,6 +1,5 @@
 <template>
-  <v-container>
-    <h1>Hallo Employee Page</h1>
+  <v-container class="mt-5">
     <EmployeeToolbar @update:search="search = $event" :addNewItem="addNewItem" />
 
     <Tabs :tabs="tabs" initial-tab="dashboard">
