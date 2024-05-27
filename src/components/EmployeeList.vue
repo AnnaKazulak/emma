@@ -59,7 +59,7 @@ const resetFilters = () => {
 };
 
 watch(filteredEmployees, (newVal) => {
-  console.log("Filtered Employees Updated:", newVal);
+  // console.log("Filtered Employees Updated:", newVal);
 }, { deep: true });
 
 

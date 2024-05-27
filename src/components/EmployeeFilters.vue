@@ -1,6 +1,24 @@
+<template>
+    <v-select label="Filter by Status" v-model="statusFilter" :items="props.statusOptions" outlined dense multiple
+        chips>
+    </v-select>
+
+    <v-text-field label="Filter by Position" v-model="positionFilter" outlined dense>
+    </v-text-field>
+
+    <v-select label="Filter by Department" v-model="departmentFilter" :items="props.departmentOptions" outlined dense
+        multiple chips>
+    </v-select>
+
+    <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2" text>
+        Reset Filters
+    </v-btn>
+</template>
+
+
+
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, watch } from 'vue';
-import { VSelect, VBtn, VTextField } from 'vuetify/components';
 
 const props = defineProps({
     statusOptions: Array,
@@ -32,20 +50,3 @@ watch([statusFilter, positionFilter, departmentFilter], () => {
 }, { deep: true });
 
 </script>
-
-
-
-<template>
-    <v-select label="Filter by Status" v-model="statusFilter" @change="updateFilters" :items="props.statusOptions"
-        outlined dense multiple chips>
-    </v-select>
-
-    <v-text-field label="Filter by Position" v-model="positionFilter" @input="updateFilters" outlined
-        dense></v-text-field>
-
-    <v-select label="Filter by Department" v-model="departmentFilter" @change="updateFilters"
-        :items="props.departmentOptions" outlined dense multiple chips>
-    </v-select>
-
-    <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2" text>Reset Filters</v-btn>
-</template>
