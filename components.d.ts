@@ -24,6 +24,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Tab: typeof import('./src/components/Tab.vue')['default']
     Tabs: typeof import('./src/components/Tabs.vue')['default']
+    VDataTable: typeof import('vuetify/lib')['VDataTable']
     VerticalTabs: typeof import('./src/components/VerticalTabs.vue')['default']
   }
 }

@@ -19,19 +19,22 @@ const handleEdit = (item: Employee) => {
 };
 
 const handleDelete = (item: Employee) => {
+  console.log("Employee to delete:", item);
+  if (!item.id) {
+    console.error("Employee ID is missing:", item);
+  }
   emit('deleteItem', item);
 };
 
 const handleRowClick = (event, data) => {
   const actualItem = data.item;
   console.log("Received actual item on row click:", actualItem);
-  if (actualItem && actualItem.id && actualItem.id !== 0) {
+  if (actualItem && actualItem.id) {
     router.push({ name: 'EmployeeDetails', params: { id: actualItem.id } });
   } else {
     console.error('Error: Employee ID is missing or undefined', actualItem);
   }
 };
-
 
 const filters = ref({
   status: [],
@@ -59,10 +62,8 @@ const resetFilters = () => {
 };
 
 watch(filteredEmployees, (newVal) => {
-  // console.log("Filtered Employees Updated:", newVal);
+  console.log("Filtered Employees Updated:", newVal);
 }, { deep: true });
-
-
 </script>
 
 <template>
@@ -82,7 +83,8 @@ watch(filteredEmployees, (newVal) => {
         mdi-delete
       </v-icon>
     </template>
+    <template v-slot:item.id="{ item }">
+      {{ item.id }}
+    </template>
   </v-data-table>
-
-
 </template>
