@@ -10,9 +10,7 @@
                 <VerticalTabs :tabs="verticalTabs" :initialTab="initialVerticalTab"
                     @update:activeVerticalTab="handleVerticalTabChange">
                     <div v-if="activeVerticalTab === 'public-profile'">
-
                         <EmployeePublicProfile :employee="employee" @update-employee="handleEmployeeUpdate" />
-
                     </div>
                     <div v-if="activeVerticalTab === 'something'">
                         <h3>Hallo Something</h3>
@@ -32,22 +30,41 @@
     </v-container>
 </template>
 
-
 <script setup>
-import { computed, ref, inject } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/firebase/init';
 import EmployeeCard from '@/components/EmployeeCard.vue';
 import Tabs from '@/components/Tabs.vue';
 import VerticalTabs from '@/components/VerticalTabs.vue';
 import EmployeePublicProfile from '@/components/EmployeePublicProfile.vue';
 
-// Inject the shared employees state
-const employees = inject('employeesKey');
 const route = useRoute();
 const employeeId = route.params.id;
 
-// This computed property finds the specific employee based on the route parameter
-const employee = computed(() => employees.value.find(emp => emp.id === parseInt(employeeId)));
+// State to hold the employee data
+const employee = ref(null);
+
+// Function to fetch employee data from Firebase
+const fetchEmployee = async (id) => {
+    try {
+        const docRef = doc(db, "employees", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            employee.value = { id: docSnap.id, ...docSnap.data() };
+        } else {
+            console.log("No such document!");
+        }
+    } catch (error) {
+        console.error("Error fetching employee:", error);
+    }
+};
+
+// Fetch the employee data when the component is mounted
+onMounted(() => {
+    fetchEmployee(employeeId);
+});
 
 const tabs = ref([
     { name: 'personal-info', icon: 'mdi-account-circle', label: 'Personal Info' },
@@ -75,15 +92,17 @@ const handleVerticalTabChange = (newVerticalTab) => {
     activeVerticalTab.value = newVerticalTab;
 };
 
-// This function handles the update of the employee data; make sure it doesn't conflict with other declarations
-function handleEmployeeUpdate(updatedEmployee) {
-    const index = employees.value.findIndex(emp => emp.id === updatedEmployee.id);
-    if (index !== -1) {
-        employees.value[index] = { ...updatedEmployee };
+// Function to handle employee data update and push changes to Firebase
+const handleEmployeeUpdate = async (updatedEmployee) => {
+    try {
+        const docRef = doc(db, "employees", updatedEmployee.id);
+        await updateDoc(docRef, updatedEmployee);
+        employee.value = { ...updatedEmployee };
+    } catch (error) {
+        console.error("Error updating employee:", error);
     }
-}
+};
 </script>
-
 
 <style scoped>
 .v-container {
