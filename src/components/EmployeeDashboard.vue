@@ -19,19 +19,19 @@
   </v-container>
 </template>
 
-
-
-
-<script setup>
-import { computed, inject, ref, reactive, watch, onBeforeUpdate, onUpdated } from 'vue';
+<script setup lang="ts">
+import { computed, ref, watch, reactive } from 'vue';
 import NumberCardContainer from './NumberCardContainer.vue';
 import DoughnutChart from './DoughnutChart.vue';
 import BarChart from './BarChart.vue';
+import { Employee } from '@/types/types';
 
-const employees = inject('employeesKey', ref([]));
+const props = defineProps<{ employees: Employee[] }>();
+
 const forceUpdate = ref(0);
 
-watch(employees, () => {
+watch(props.employees, (newVal) => {
+  console.log("Employees data passed to EmployeeDashboard:", newVal);
   forceUpdate.value++;  // Increment to trigger update
 }, { deep: true });
 
@@ -46,10 +46,10 @@ const draggableItems = reactive({
 });
 
 const numberCards = computed(() => [
-  { icon: 'mdi-account-group', count: employees.value.length, label: 'Total Employees' },
-  { icon: 'mdi-gender-female', count: employees.value.filter(emp => emp.gender === "Female").length, label: 'Female' },
-  { icon: 'mdi-gender-male', count: employees.value.filter(emp => emp.gender === "Male").length, label: 'Male' },
-  { icon: 'mdi-gender-non-binary', count: employees.value.filter(emp => emp.gender === "Divers").length, label: 'Divers' }
+  { icon: 'mdi-account-group', count: props.employees.length, label: 'Total Employees' },
+  { icon: 'mdi-gender-female', count: props.employees.filter(emp => emp.gender === "Female").length, label: 'Female' },
+  { icon: 'mdi-gender-male', count: props.employees.filter(emp => emp.gender === "Male").length, label: 'Male' },
+  { icon: 'mdi-gender-non-binary', count: props.employees.filter(emp => emp.gender === "Divers").length, label: 'Divers' }
 ]);
 
 const draggedItem = ref(null);
@@ -66,44 +66,4 @@ function drop(event, targetItem) {
     draggableItems.items.splice(targetIndex, 0, draggableItems.items.splice(draggedIndex, 1)[0]);
   }
 }
-
-const barChartOptions = {
-  scales: {
-    y: {
-      beginAtZero: true
-    }
-  }
-};
-
-function prepareBarChartData(key) {
-  const data = employees.value.reduce((acc, curr) => {
-    acc[curr[key]] = (acc[curr[key]] || 0) + 1;
-    return acc;
-  }, {});
-
-  return {
-    labels: Object.keys(data),
-    datasets: [{
-      label: 'Employees',
-      data: Object.values(data),
-      backgroundColor: 'rgba(54, 162, 235, 0.6)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    }]
-  };
-}
-
-let chartInstance = null;
-
-onBeforeUpdate(() => {
-  if (chartInstance) {
-    chartInstance.destroy(); // Destroy the old chart instance to prevent memory leaks
-  }
-});
-
-onUpdated(() => {
-  initChart(); // Function to initialize the chart
-});
-
-
 </script>

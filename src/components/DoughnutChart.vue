@@ -1,17 +1,16 @@
 <template>
     <!-- <v-card> -->
-    <v-card-title>{{ title }}</v-card-title>
-    <v-card-text>
-        <div style="position: relative; width: 100%; height: 100%;">
-            <canvas ref="chartContainer"></canvas>
-        </div>
-    </v-card-text>
+        <v-card-title>{{ title }}</v-card-title>
+        <v-card-text>
+            <div style="position: relative; width: 100%; height: 100%;">
+                <canvas ref="chartContainer"></canvas>
+            </div>
+        </v-card-text>
     <!-- </v-card> -->
 </template>
 
-
 <script setup>
-import { ref, onMounted, watchEffect, onBeforeUnmount, watch, defineProps, inject } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount, defineProps } from 'vue';
 import { Chart, registerables } from 'chart.js';
 
 // Register the necessary components for Chart.js
@@ -35,14 +34,13 @@ const props = defineProps({
     }
 });
 
-const employees = inject('employeesKey');
-
 const chartData = ref({
     labels: [],
     datasets: []
 });
 
 const updateChartData = () => {
+    console.log("Updating chart data with:", props.data, props.category);
     const counts = {};
     props.data.forEach(item => {
         const value = item[props.category];
@@ -62,6 +60,7 @@ const updateChartData = () => {
             hoverBackgroundColor: props.hoverColors
         }]
     };
+    console.log("Updated chartData:", chartData.value);
 };
 
 const chartContainer = ref(null);
@@ -78,33 +77,25 @@ onMounted(() => {
                 maintainAspectRatio: false
             }
         });
+        console.log("Chart initialized:", myChart);
     }
 });
 
-watchEffect(() => {
+watch(() => props.data, () => {
+    updateChartData();
     if (myChart) {
         myChart.data = chartData.value;
         myChart.update();
+        console.log("Chart updated:", myChart);
     }
-});
+}, { deep: true });
 
 onBeforeUnmount(() => {
     if (myChart) {
         myChart.destroy();
     }
 });
-
-// Watch employees for updates
-watch(employees, (newData) => {
-    updateChartData();
-    if (myChart) {
-        myChart.update();
-    }
-}, { deep: true });
-
 </script>
-
-
 
 <style scoped>
 .v-card {

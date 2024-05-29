@@ -4,7 +4,7 @@
 
     <Tabs :tabs="tabs" initial-tab="dashboard">
       <Tab name="dashboard">
-        <EmployeeDashboard />
+        <EmployeeDashboard :employees="employees" />
       </Tab>
       <Tab name="EmployeeList">
         <EmployeeList :employees="filteredEmployees" :selected="selected" :headers="headers" @editItem="editItem"
@@ -231,7 +231,6 @@ const headers = [
 }
 
 @media (max-width: 768px) {
-
   .dialog,
   .tabs,
   .employee-toolbar {
@@ -240,7 +239,6 @@ const headers = [
 }
 
 @media (max-width: 480px) {
-
   .tabs,
   .employee-toolbar {
     flex-direction: column;
