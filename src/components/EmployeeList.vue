@@ -4,6 +4,7 @@ import { VDataTable } from "vuetify/labs/VDataTable";
 import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
 import { useRouter } from 'vue-router';
+import { parseISO, isEqual, isValid, format } from 'date-fns';
 
 const props = defineProps<{
   employees: Employee[];
@@ -45,12 +46,22 @@ const filters = ref({
 
 const filteredEmployees = computed(() => {
   return props.employees.filter(employee => {
-    const startDateMatch = !filters.value.startDate || new Date(employee.startDate) >= new Date(filters.value.startDate);
+    if (filters.value.startDate) {
+      const employeeStartDate = parseISO(employee.startDate);
+      const filterStartDate = parseISO(filters.value.startDate);
+      const startDateMatch = isValid(employeeStartDate) && isValid(filterStartDate) && isEqual(employeeStartDate, filterStartDate);
+      
+      return (
+        startDateMatch &&
+        (filters.value.status.length === 0 || filters.value.status.includes(employee.status)) &&
+        employee.position.toLowerCase().includes(filters.value.position.toLowerCase()) &&
+        (filters.value.department.length === 0 || filters.value.department.includes(employee.department))
+      );
+    }
     return (
       (filters.value.status.length === 0 || filters.value.status.includes(employee.status)) &&
       employee.position.toLowerCase().includes(filters.value.position.toLowerCase()) &&
-      (filters.value.department.length === 0 || filters.value.department.includes(employee.department)) &&
-      startDateMatch
+      (filters.value.department.length === 0 || filters.value.department.includes(employee.department))
     );
   });
 });
