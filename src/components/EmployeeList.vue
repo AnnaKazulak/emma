@@ -39,15 +39,18 @@ const handleRowClick = (event, data) => {
 const filters = ref({
   status: [],
   position: '',
-  department: []
+  department: [],
+  startDate: null
 });
 
 const filteredEmployees = computed(() => {
   return props.employees.filter(employee => {
+    const startDateMatch = !filters.value.startDate || new Date(employee.startDate) >= new Date(filters.value.startDate);
     return (
       (filters.value.status.length === 0 || filters.value.status.includes(employee.status)) &&
       employee.position.toLowerCase().includes(filters.value.position.toLowerCase()) &&
-      (filters.value.department.length === 0 || filters.value.department.includes(employee.department))
+      (filters.value.department.length === 0 || filters.value.department.includes(employee.department)) &&
+      startDateMatch
     );
   });
 });
@@ -57,7 +60,7 @@ const updateFilters = (newFilters) => {
 };
 
 const resetFilters = () => {
-  filters.value = { status: [], position: '', department: [] };
+  filters.value = { status: [], position: '', department: [], startDate: null };
   updateFilters(filters.value);
 };
 

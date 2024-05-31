@@ -7,6 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AdvancedFilter: typeof import('./src/components/AdvancedFilter.vue')['default']
+    AdvancedFilters: typeof import('./src/components/AdvancedFilters.vue')['default']
     BarChart: typeof import('./src/components/BarChart.vue')['default']
     DeleteEmployeeDialog: typeof import('./src/components/DeleteEmployeeDialog.vue')['default']
     DoughnutChart: typeof import('./src/components/DoughnutChart.vue')['default']
@@ -24,7 +26,16 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Tab: typeof import('./src/components/Tab.vue')['default']
     Tabs: typeof import('./src/components/Tabs.vue')['default']
+    VBtn: typeof import('vuetify/lib')['VBtn']
+    VCol: typeof import('vuetify/lib')['VCol']
+    VContainer: typeof import('vuetify/lib')['VContainer']
     VDataTable: typeof import('vuetify/lib')['VDataTable']
+    VDatePicker: typeof import('vuetify/lib')['VDatePicker']
     VerticalTabs: typeof import('./src/components/VerticalTabs.vue')['default']
+    VIcon: typeof import('vuetify/lib')['VIcon']
+    VMenu: typeof import('vuetify/lib')['VMenu']
+    VRow: typeof import('vuetify/lib')['VRow']
+    VSelect: typeof import('vuetify/lib')['VSelect']
+    VTextField: typeof import('vuetify/lib')['VTextField']
   }
 }

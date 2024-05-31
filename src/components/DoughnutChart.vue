@@ -40,7 +40,7 @@ const chartData = ref({
 });
 
 const updateChartData = () => {
-    console.log("Updating chart data with:", props.data, props.category);
+    // console.log("Updating chart data with:", props.data, props.category);
     const counts = {};
     props.data.forEach(item => {
         const value = item[props.category];
@@ -60,7 +60,7 @@ const updateChartData = () => {
             hoverBackgroundColor: props.hoverColors
         }]
     };
-    console.log("Updated chartData:", chartData.value);
+    // console.log("Updated chartData:", chartData.value);
 };
 
 const chartContainer = ref(null);
@@ -77,7 +77,7 @@ onMounted(() => {
                 maintainAspectRatio: false
             }
         });
-        console.log("Chart initialized:", myChart);
+        // console.log("Chart initialized:", myChart);
     }
 });
 
@@ -86,7 +86,7 @@ watch(() => props.data, () => {
     if (myChart) {
         myChart.data = chartData.value;
         myChart.update();
-        console.log("Chart updated:", myChart);
+        // console.log("Chart updated:", myChart);
     }
 }, { deep: true });
 

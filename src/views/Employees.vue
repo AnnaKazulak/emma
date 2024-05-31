@@ -195,7 +195,8 @@ const headers = [
   { title: 'Status', value: 'status' },
   { title: 'Position', value: 'position' },
   { title: 'Department', value: 'department' },
-  { title: 'Id', value: 'id' },
+  // { title: 'Id', value: 'id' },
+  { title: 'Start Date', value: 'startDate' },
   { title: 'Actions', value: 'actions', sortable: false }
 ];
 </script>
@@ -231,6 +232,7 @@ const headers = [
 }
 
 @media (max-width: 768px) {
+
   .dialog,
   .tabs,
   .employee-toolbar {
@@ -239,6 +241,7 @@ const headers = [
 }
 
 @media (max-width: 480px) {
+
   .tabs,
   .employee-toolbar {
     flex-direction: column;
