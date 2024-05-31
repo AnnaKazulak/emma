@@ -1,19 +1,31 @@
 <template>
-  <v-select label="Filter by Status" v-model="statusFilter" :items="props.statusOptions" outlined dense multiple
-    chips></v-select>
-
-  <v-text-field label="Filter by Position" v-model="positionFilter" outlined dense></v-text-field>
-
-  <v-select label="Filter by Department" v-model="departmentFilter" :items="props.departmentOptions" outlined dense
-    multiple chips></v-select>
-
-  <v-text-field v-model="startDateFilter" label="Filter by Start Date" type="date" outlined dense
-    @input="handleDateChange"></v-text-field>
-
-  <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2" text>
-    Reset Filters
-  </v-btn>
+  <v-container>
+    <v-row align="center" justify="space-between" no-gutters>
+      <v-col cols="12" sm="2" md="2">
+        <v-select label="Status" v-model="statusFilter" :items="props.statusOptions" outlined dense multiple
+          chips></v-select>
+      </v-col>
+      <v-col cols="12" sm="2" md="2">
+        <v-text-field label="Position" v-model="positionFilter" outlined dense></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="2" md="2">
+        <v-select label="Department" v-model="departmentFilter" :items="props.departmentOptions" outlined dense multiple
+          chips></v-select>
+      </v-col>
+      <v-col cols="12" sm="2" md="2">
+        <v-text-field v-model="startDateFilter" label="Start Date" type="date" outlined dense
+          @input="handleDateChange"></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="2" md="2" class="d-flex align-center">
+        <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2" text>
+          Reset Filters
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+
+
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, watch } from 'vue';
