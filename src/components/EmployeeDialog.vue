@@ -8,10 +8,19 @@
                 <v-container>
                     <v-row>
                         <v-col cols="12">
-                            <v-text-field v-model="localEditedItem.firstName" label="First Name"></v-text-field>
+                            <v-text-field v-model="localEditedItem.firstName" label="First Name"
+                                :rules="[v => !!v || 'First Name is required']" :error-messages="firstNameErrors"
+                                @input="validateFirstName"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-text-field v-model="localEditedItem.lastName" label="Last Name"></v-text-field>
+                            <v-text-field v-model="localEditedItem.lastName" label="Last Name"
+                                :rules="[v => !!v || 'Last Name is required']" :error-messages="lastNameErrors"
+                                @input="validateLastName"></v-text-field>
+                        </v-col>
+                        <v-col cols="12">
+                            <v-text-field v-model="localEditedItem.startDate" label="Start Date" type="date"
+                                :rules="[v => !!v || 'Start Date is required']" :error-messages="startDateErrors"
+                                @input="validateStartDate"></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-select v-model="localEditedItem.gender" :items="['Male', 'Female', 'Divers']"
@@ -34,7 +43,6 @@
                                 'Sales', 'Finance', 'Legal', 'IT', 'Other', 'AI', 'UX', 'Design'
                             ]"></v-select>
                         </v-col>
-
                     </v-row>
                 </v-container>
             </v-card-text>
@@ -45,6 +53,7 @@
         </v-card>
     </v-dialog>
 </template>
+
 
 <script setup lang="ts">
 import { ref, watch, computed, defineProps, defineEmits } from 'vue';
@@ -62,6 +71,10 @@ const emit = defineEmits(['update:dialog', 'save', 'close']);
 const localDialog = ref(props.dialog);
 const localEditedItem = ref({ ...props.editedItem });
 
+const firstNameErrors = ref<string[]>([]);
+const lastNameErrors = ref<string[]>([]);
+const startDateErrors = ref<string[]>([]);
+
 watch(() => props.dialog, (newVal) => {
     localDialog.value = newVal;
 }, { immediate: true });
@@ -74,11 +87,28 @@ const dialogTitle = computed(() => {
     return localEditedItem.value.firstName ? 'Edit Employee' : 'New Employee';
 });
 
-const emitSave = () => {
-    emit('save', { ...localEditedItem.value });
-    emit('close');
+const validateFirstName = () => {
+    firstNameErrors.value = localEditedItem.value.firstName ? [] : ['First Name is required'];
 };
 
+const validateLastName = () => {
+    lastNameErrors.value = localEditedItem.value.lastName ? [] : ['Last Name is required'];
+};
+
+const validateStartDate = () => {
+    startDateErrors.value = localEditedItem.value.startDate ? [] : ['Start Date is required'];
+};
+
+const emitSave = () => {
+    validateFirstName();
+    validateLastName();
+    validateStartDate();
+
+    if (!firstNameErrors.value.length && !lastNameErrors.value.length && !startDateErrors.value.length) {
+        emit('save', { ...localEditedItem.value });
+        emit('close');
+    }
+};
 
 const emitClose = () => {
     emit('update:dialog', false);
