@@ -17,7 +17,7 @@
           @input="handleDateChange"></v-text-field>
       </v-col>
       <v-col cols="12" sm="2" md="2" class="d-flex align-center">
-        <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2" text>
+        <v-btn color="primary" @click="$emit('resetFilters')" class="ma-2">
           Reset Filters
         </v-btn>
       </v-col>
