@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
-import EmployeeFilters from "./EmployeeFilters.vue";
+// import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
 import { useRouter } from 'vue-router';
 import { parseISO, isEqual, isValid } from 'date-fns';
