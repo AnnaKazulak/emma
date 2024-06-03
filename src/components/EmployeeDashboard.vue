@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, reactive } from 'vue';
-import NumberCardContainer from './NumberCardContainer.vue';
-import DoughnutChart from './DoughnutChart.vue';
-import BarChart from './BarChart.vue';
+// import NumberCardContainer from './NumberCardContainer.vue';
+// import DoughnutChart from './DoughnutChart.vue';
+// import BarChart from './BarChart.vue';
 import { Employee, DraggableItem } from '@/types/types';
 
 const props = defineProps<{ employees: Employee[] }>();
