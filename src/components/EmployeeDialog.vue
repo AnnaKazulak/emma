@@ -23,8 +23,7 @@
                                 @input="validateStartDate"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-select v-model="localEditedItem.gender" :items="genderOptions"
-                                label="Gender"></v-select>
+                            <v-select v-model="localEditedItem.gender" :items="genderOptions" label="Gender"></v-select>
                         </v-col>
                         <v-col cols="12">
                             <v-select v-model="localEditedItem.status" :items="statusOptions" label="Status"></v-select>
@@ -33,14 +32,15 @@
                             <v-text-field v-model="localEditedItem.position" label="Position"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-select v-model="localEditedItem.department" label="Department" :items="departmentOptions"></v-select>
+                            <v-select v-model="localEditedItem.department" label="Department"
+                                :items="departmentOptions"></v-select>
                         </v-col>
                     </v-row>
                 </v-container>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="blue-darken-1" text @click="emitClose">Cancel</v-btn>
-                <v-btn color="blue-darken-1" text @click="emitSave">Save</v-btn>
+                <v-btn color="blue-darken-1" @click="emitClose">Cancel</v-btn>
+                <v-btn color="blue-darken-1" @click="emitSave">Save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
