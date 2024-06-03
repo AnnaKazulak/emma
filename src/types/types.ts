@@ -15,3 +15,11 @@ export interface Employee {
   };
   gender: string;
 }
+
+export interface DraggableItem {
+  type: string;
+  label?: string;
+  dataKey?: string;
+  title?: string;
+  chartType?: string;
+}
