@@ -23,25 +23,17 @@
                                 @input="validateStartDate"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-select v-model="localEditedItem.gender" :items="['Male', 'Female', 'Divers']"
+                            <v-select v-model="localEditedItem.gender" :items="genderOptions"
                                 label="Gender"></v-select>
                         </v-col>
                         <v-col cols="12">
-                            <v-select v-model="localEditedItem.status" :items="['Active',
-                                'Part-Time',
-                                'Remote',
-                                'On Leave',
-                                'On Probation',
-                                'Suspended']" label="Status"></v-select>
+                            <v-select v-model="localEditedItem.status" :items="statusOptions" label="Status"></v-select>
                         </v-col>
                         <v-col cols="12">
                             <v-text-field v-model="localEditedItem.position" label="Position"></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-select v-model="localEditedItem.department" label="Department" :items="[
-                                'Engineering', 'HR', 'Marketing',
-                                'Sales', 'Finance', 'Legal', 'IT', 'Other', 'AI', 'UX', 'Design'
-                            ]"></v-select>
+                            <v-select v-model="localEditedItem.department" label="Department" :items="departmentOptions"></v-select>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -57,6 +49,7 @@
 
 <script setup lang="ts">
 import { ref, watch, computed, defineProps, defineEmits } from 'vue';
+import { genderOptions, statusOptions, departmentOptions } from '@/utils/selectOptions';
 
 const props = defineProps({
     dialog: Boolean,

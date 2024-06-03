@@ -5,6 +5,7 @@ import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
 import { useRouter } from 'vue-router';
 import { parseISO, isEqual, isValid, format } from 'date-fns';
+import { genderOptions, statusOptions, departmentOptions } from '@/utils/selectOptions';
 
 const props = defineProps<{
   employees: Employee[];
@@ -14,7 +15,6 @@ const props = defineProps<{
 
 const router = useRouter();
 const emit = defineEmits(['editItem', 'deleteItem']);
-
 const handleEdit = (item: Employee) => {
   emit('editItem', item);
 };
@@ -82,8 +82,8 @@ watch(filteredEmployees, (newVal) => {
 
 <template>
   <!-- Employee Filters component usage -->
-  <EmployeeFilters :status-options="['Active', 'Part-Time', 'Remote', 'On Leave', 'On Probation', 'Suspended']"
-    :department-options="['HR', 'Engineering', 'Marketing', 'Sales', 'Customer Support', 'IT', 'Management', 'Analytics', 'Business', 'Documentation', 'Agile', 'AI', 'QA']"
+  <EmployeeFilters :status-options="statusOptions"
+    :department-options="departmentOptions"
     :initial-filters="filters" @updateFilters="updateFilters" @resetFilters="resetFilters" />
 
   <!-- Data Table Display -->

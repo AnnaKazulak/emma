@@ -11,27 +11,16 @@
                 @input="validateLastName"></v-text-field>
             <div v-else>Last Name: {{ editableEmployee.lastName }}</div>
 
-            <v-select v-if="editMode" label="Gender" :items="['Male', 'Female', 'Divers']"
-                v-model="editableEmployee.gender" chips></v-select>
+            <v-select v-if="editMode" label="Gender" :items="genderOptions" v-model="editableEmployee.gender" chips></v-select>
             <div v-else>Gender: {{ editableEmployee.gender }}</div>
 
             <v-text-field v-if="editMode" label="Position" v-model="editableEmployee.position"></v-text-field>
             <div v-else>Position: {{ editableEmployee.position }}</div>
 
-            <v-select v-if="editMode" label="Department" :items="[
-                'Engineering', 'HR', 'Marketing',
-                'Sales', 'Finance', 'Legal', 'IT', 'Other', 'AI', 'UX', 'Design'
-            ]" v-model="editableEmployee.department" chips></v-select>
+            <v-select v-if="editMode" label="Department" :items="departmentOptions" v-model="editableEmployee.department" chips></v-select>
             <div v-else>Department: {{ editableEmployee.department }}</div>
 
-            <v-select v-if="editMode" label="Status" :items="[
-                'Active',
-                'Part-Time',
-                'Remote',
-                'On Leave',
-                'On Probation',
-                'Suspended'
-            ]" v-model="editableEmployee.status" chips></v-select>
+            <v-select v-if="editMode" label="Status" :items="statusOptions" v-model="editableEmployee.status" chips></v-select>
             <div v-else>Status: {{ editableEmployee.status }}</div>
 
             <v-text-field v-if="editMode" label="Start Date" type="date" v-model="editableEmployee.startDate"
@@ -67,6 +56,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from 'vue';
+import { genderOptions, statusOptions, departmentOptions } from '@/utils/selectOptions';
 
 export default defineComponent({
     name: 'EmployeePublicProfile',
@@ -156,7 +146,10 @@ export default defineComponent({
             startDateErrors,
             validateFirstName,
             validateLastName,
-            validateStartDate
+            validateStartDate,
+            genderOptions,
+            statusOptions,
+            departmentOptions
         };
     }
 });
