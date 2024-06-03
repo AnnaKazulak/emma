@@ -4,8 +4,8 @@ import { VDataTable } from "vuetify/labs/VDataTable";
 import EmployeeFilters from "./EmployeeFilters.vue";
 import { Employee } from "@/types/types";
 import { useRouter } from 'vue-router';
-import { parseISO, isEqual, isValid, format } from 'date-fns';
-import { genderOptions, statusOptions, departmentOptions } from '@/utils/selectOptions';
+import { parseISO, isEqual, isValid } from 'date-fns';
+import {  statusOptions, departmentOptions } from '@/utils/selectOptions';
 
 const props = defineProps<{
   employees: Employee[];
@@ -27,7 +27,7 @@ const handleDelete = (item: Employee) => {
   emit('deleteItem', item);
 };
 
-const handleRowClick = (event, data) => {
+const handleRowClick = (event: Event, data: { item: Employee }) => {
   const actualItem = data.item;
   console.log("Received actual item on row click:", actualItem);
   if (actualItem && actualItem.id) {
@@ -38,10 +38,10 @@ const handleRowClick = (event, data) => {
 };
 
 const filters = ref({
-  status: [],
+  status: [] as string[],
   position: '',
-  department: [],
-  startDate: null
+  department: [] as string[],
+  startDate: null as string | null
 });
 
 const filteredEmployees = computed(() => {
@@ -66,7 +66,7 @@ const filteredEmployees = computed(() => {
   });
 });
 
-const updateFilters = (newFilters) => {
+const updateFilters = (newFilters: typeof filters.value) => {
   filters.value = newFilters;
 };
 
@@ -78,6 +78,12 @@ const resetFilters = () => {
 watch(filteredEmployees, (newVal) => {
   console.log("Filtered Employees Updated:", newVal);
 }, { deep: true });
+
+const selected = ref(props.selected);
+
+watch(() => props.selected, (newVal) => {
+  selected.value = newVal;
+}, { deep: true });
 </script>
 
 <template>
@@ -87,9 +93,9 @@ watch(filteredEmployees, (newVal) => {
     :initial-filters="filters" @updateFilters="updateFilters" @resetFilters="resetFilters" />
 
   <!-- Data Table Display -->
-  <v-data-table v-model="props.selected" :headers="props.headers" :items="filteredEmployees" item-key="id"
+  <v-data-table v-model="selected" :headers="props.headers" :items="filteredEmployees" item-key="id"
     @click:row="handleRowClick">
-    <template v-slot:item.actions="{ item }">
+    <template  v-slot:[`item.actions`]="{ item }">
       <v-icon class="me-2" size="small" @click.stop="handleEdit(item)">
         mdi-pencil
       </v-icon>
@@ -97,7 +103,7 @@ watch(filteredEmployees, (newVal) => {
         mdi-delete
       </v-icon>
     </template>
-    <template v-slot:item.id="{ item }">
+    <template v-slot:[`item.id`]="{ item }">
       {{ item.id }}
     </template>
   </v-data-table>
