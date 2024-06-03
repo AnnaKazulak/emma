@@ -24,7 +24,7 @@ import { computed, ref, watch, reactive } from 'vue';
 import NumberCardContainer from './NumberCardContainer.vue';
 import DoughnutChart from './DoughnutChart.vue';
 import BarChart from './BarChart.vue';
-import { Employee } from '@/types/types';
+import { Employee, DraggableItem } from '@/types/types';
 
 const props = defineProps<{ employees: Employee[] }>();
 
@@ -42,7 +42,7 @@ const draggableItems = reactive({
     { type: 'chart', dataKey: 'status', title: 'Status Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Department Distribution', chartType: 'doughnut' },
     { type: 'chart', dataKey: 'department', title: 'Bar Department Distribution', chartType: 'bar' }
-  ]
+  ] as DraggableItem[]
 });
 
 const numberCards = computed(() => [
@@ -52,18 +52,23 @@ const numberCards = computed(() => [
   { icon: 'mdi-gender-non-binary', count: props.employees.filter(emp => emp.gender === "Divers").length, label: 'Divers' }
 ]);
 
-const draggedItem = ref(null);
+const draggedItem = ref<DraggableItem | null>(null);
 
-function dragStart(event, item) {
-  draggedItem.value = item;
-  event.dataTransfer.effectAllowed = 'move';
-}
-
-function drop(event, targetItem) {
-  const draggedIndex = draggableItems.items.indexOf(draggedItem.value);
-  const targetIndex = draggableItems.items.indexOf(targetItem);
-  if (draggedIndex !== targetIndex) {
-    draggableItems.items.splice(targetIndex, 0, draggableItems.items.splice(draggedIndex, 1)[0]);
+function dragStart(event: DragEvent, item: DraggableItem) {
+  if (event.dataTransfer) {
+    draggedItem.value = item;
+    event.dataTransfer.effectAllowed = 'move';
   }
 }
+
+function drop(event: DragEvent, targetItem: DraggableItem) {
+  if (event.dataTransfer) {
+    const draggedIndex = draggableItems.items.indexOf(draggedItem.value as DraggableItem);
+    const targetIndex = draggableItems.items.indexOf(targetItem);
+    if (draggedIndex !== targetIndex) {
+      draggableItems.items.splice(targetIndex, 0, draggableItems.items.splice(draggedIndex, 1)[0]);
+    }
+  }
+}
+
 </script>
